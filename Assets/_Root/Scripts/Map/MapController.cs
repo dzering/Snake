@@ -7,7 +7,7 @@ namespace Snake3D.Map
 
     internal class MapController : BaseController
     {
-        private ResourcePath path = new ResourcePath() { Path = "Map" };
+        private ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
         private readonly MapView mapView;
 
         private GameObject mapObject;
@@ -17,6 +17,7 @@ namespace Snake3D.Map
         {
             mapView = LoadView();
             AddGameObject(mapObject);
+            CreateMap();
         }
 
         private MapView LoadView()
@@ -28,7 +29,6 @@ namespace Snake3D.Map
 
         private void CreateMap()
         {
-            mapObject = new GameObject("Map");
             mapRender = mapObject.AddComponent<SpriteRenderer>();
 
             Texture2D txt = new Texture2D(mapView.MaxWidth, mapView.MaxHight);

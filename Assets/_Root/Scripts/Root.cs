@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Snake3D.Map;
 
 namespace Snake3D
 {
@@ -14,7 +15,7 @@ namespace Snake3D
         // Start is called before the first frame update
         void Start()
         {
-
+            new MapController(); 
         }
 
         // Update is called once per frame
