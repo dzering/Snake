@@ -1,13 +1,11 @@
-﻿
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SnakeGame.Snake
 {
     class SnakeController
     {
         private Color snakeColor;
-        private GameObject snakeObj;
+        public GameObject snakeObj;
 
         public SnakeController()
         {

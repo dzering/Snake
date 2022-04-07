@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using SnakeGame.Map;
 using SnakeGame.Snake;
+using System;
 
 namespace SnakeGame
 {
     internal class Root : MonoBehaviour
     {
 
+        private MapController mapController;
+        private SnakeController snakeController;
+
+        Node startPosition;
+
         // Start is called before the first frame update
         void Start()
         {
-            new MapController();
-            new SnakeController();
+            mapController = new MapController();
+            startPosition = mapController.GetNode(3, 3); //TODO make random start position
+            snakeController = new SnakeController();
+            snakeController.snakeObj.transform.position = startPosition.worldPosition;
+
         }
 
         // Update is called once per frame
