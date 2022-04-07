@@ -1,11 +1,12 @@
 using Object = UnityEngine.Object;
 using UnityEngine;
-using Snake3D.Tools;
+using SnakeGame.Tools;
+using System;
 
-namespace Snake3D.Map
+namespace SnakeGame.Map
 {
-
-    internal class MapController : BaseController
+    [Serializable]
+    public class MapController : BaseController
     {
         private ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
         private readonly MapView mapView;
@@ -65,6 +66,8 @@ namespace Snake3D.Map
                 }
 
             }
+
+            txt.filterMode = FilterMode.Point;
 
             txt.Apply();
 

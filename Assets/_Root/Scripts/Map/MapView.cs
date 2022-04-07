@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Snake3D.Map
+namespace SnakeGame.Map
 {
-    internal class MapView : MonoBehaviour
+    public class MapView : MonoBehaviour
     {
         [SerializeField] public int MaxWidth = 17;
         [SerializeField] public int MaxHight = 15;

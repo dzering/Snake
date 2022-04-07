@@ -1,5 +1,5 @@
 ﻿
-namespace Snake3D
+namespace SnakeGame
 {
     internal class MainController : BaseController
     {

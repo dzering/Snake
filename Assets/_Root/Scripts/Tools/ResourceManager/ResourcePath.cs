@@ -1,4 +1,4 @@
-﻿namespace Snake3D.Tools
+﻿namespace SnakeGame.Tools
 {
     internal class ResourcePath
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Snake3D.Tools
+namespace SnakeGame.Tools
 {
     internal static class ResourceLoader
     {

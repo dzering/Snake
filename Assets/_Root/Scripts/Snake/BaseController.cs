@@ -3,9 +3,9 @@ using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Snake3D
+namespace SnakeGame
 {
-    internal abstract class BaseController : IDisposable
+    public abstract class BaseController : IDisposable
     {
         private List<BaseController> controllers;
         private List<GameObject> views;
