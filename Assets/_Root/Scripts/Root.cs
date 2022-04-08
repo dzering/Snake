@@ -15,11 +15,10 @@ namespace SnakeGame
 
         Node startPosition;
 
-        // Start is called before the first frame update
         void Start()
         {
             mapController = new MapController();
-            startPosition = mapController.GetNode(3, 3); //TODO make random start position
+            startPosition = mapController.GetNode(2, 2); //TODO make random start position
             snakeController = new SnakeController();
             snakeController.snakeObj.transform.position = startPosition.worldPosition;
 

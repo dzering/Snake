@@ -5,10 +5,9 @@ using System;
 
 namespace SnakeGame.Map
 {
-    [Serializable]
     public class MapController : BaseController
     {
-        private ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
+        private readonly ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
         private readonly MapView mapView;
 
         private GameObject mapObject;
@@ -26,7 +25,7 @@ namespace SnakeGame.Map
         private MapView LoadView()
         {
             var pref = ResourceLoader.LoadPrefab(path);
-            mapObject = Object.Instantiate(pref);
+            mapObject = GameObject.Instantiate(pref);
             return mapObject.GetComponent<MapView>();
         }
 

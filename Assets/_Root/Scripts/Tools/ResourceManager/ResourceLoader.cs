@@ -2,7 +2,7 @@
 
 namespace SnakeGame.Tools
 {
-    internal static class ResourceLoader
+    public static class ResourceLoader
     {
         public static GameObject LoadPrefab(ResourcePath path)
         {

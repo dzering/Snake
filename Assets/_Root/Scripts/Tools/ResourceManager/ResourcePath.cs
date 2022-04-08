@@ -1,6 +1,6 @@
 ﻿namespace SnakeGame.Tools
 {
-    internal class ResourcePath
+    public class ResourcePath
     {
         public string Path;
     }
