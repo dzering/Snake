@@ -3,7 +3,7 @@ using SnakeGame.Base;
 using SnakeGame.Snake;
 using SnakeGame.Map;
 using SnakeGame.UserControlSystem;
-using SnakeGame;
+using SnakeGame.Tools.Reactive;
 
 namespace SnakeGame.Game
 {
@@ -13,16 +13,44 @@ namespace SnakeGame.Game
         private KeyboardInteractionHandler interactionHandler;
         private SnakeController snakeController;
 
-        Node startPosition;
+        private SubscriptionProperty<Direction> direction;
+
+        Node playerNode;
+        Node targetNode;
 
         public GameController()
         {
-            mapController = new MapController();
-            startPosition = mapController.GetNode(2, 2); //TODO make random start position
-            snakeController = new SnakeController();
-            snakeController.snakeObj.transform.position = startPosition.worldPosition;
-
+            Init();
         }
+
+        private void Init()
+        {
+            direction = new SubscriptionProperty<Direction>();
+            interactionHandler = new KeyboardInteractionHandler(direction);
+            mapController = new MapController();
+            playerNode = mapController.GetNode(2, 2); //TODO make random start position
+            snakeController = new SnakeController(direction);
+            snakeController.snakeObj.transform.position = playerNode.worldPosition;
+
+            AddController(mapController);
+            AddController(snakeController);
+            snakeController.OnMove += UpdatePlayerPosition;
+        }
+
+        private void UpdatePlayerPosition(int x, int y)
+        {
+            targetNode = mapController.GetNode(playerNode.X + x, playerNode.Y + y);
+            if(targetNode == null)
+            {
+                Debug.Log("Game Over"); // GameOver
+            }
+            else
+            {
+                snakeController.snakeObj.transform.position = targetNode.worldPosition;
+                playerNode = targetNode;
+            }
+        }
+
 
     }
 }

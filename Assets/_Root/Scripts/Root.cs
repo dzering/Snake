@@ -4,7 +4,7 @@ using SnakeGame.Game;
 
 namespace SnakeGame
 {
-    internal class Root : MonoBehaviour
+    public class Root : MonoBehaviour
     {
         
         void Start()
