@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace SnakeGame
+namespace SnakeGame.Base
 {
     public abstract class BaseController : IDisposable
     {

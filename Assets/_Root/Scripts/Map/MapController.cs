@@ -1,7 +1,7 @@
 using Object = UnityEngine.Object;
 using UnityEngine;
 using SnakeGame.Tools;
-using System;
+using SnakeGame.Base;
 
 namespace SnakeGame.Map
 {

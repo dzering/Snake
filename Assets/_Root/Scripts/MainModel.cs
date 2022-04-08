@@ -2,13 +2,13 @@
 
 namespace SnakeGame
 {
-    internal class MainModel
+    public class MainModel
     {
         private SnakeModel snake;
         private GameState gameState;
     }
 
-    internal enum GameState
+    public enum GameState
     {
         None,
         Menu,

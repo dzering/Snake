@@ -1,7 +1,9 @@
-﻿
+﻿using SnakeGame.Base;
+
+
 namespace SnakeGame
 {
-    internal class MainController : BaseController
+    public class MainController : BaseController
     {
         private readonly MainModel mainModel;
 
