@@ -4,14 +4,17 @@ using SnakeGame.Snake;
 using SnakeGame.Map;
 using SnakeGame.UserControlSystem;
 using SnakeGame.Tools.Reactive;
+using SnakeGame.Camera;
 
 namespace SnakeGame.Game
 {
     public class GameController : BaseController
     {
-        private MapController mapController;
-        private KeyboardInteractionHandler interactionHandler;
-        private SnakeController snakeController;
+        private readonly MapController mapController;
+        private readonly KeyboardInteractionHandler interactionHandler;
+        private readonly SnakeController snakeController;
+        private readonly CameraController cameraController;
+
 
         private SubscriptionProperty<Direction> direction;
 
@@ -20,20 +23,31 @@ namespace SnakeGame.Game
 
         public GameController()
         {
+            direction = new SubscriptionProperty<Direction>();
+
+            interactionHandler = new KeyboardInteractionHandler(direction);
+            AddController(interactionHandler);
+
+            mapController = new MapController();
+            AddController(mapController);
+
+            snakeController = new SnakeController(direction);
+            AddController(snakeController);
+
+            cameraController = new CameraController();
+
             Init();
+
+            cameraController.SetCamPos(mapController.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
+
         }
 
         private void Init()
         {
-            direction = new SubscriptionProperty<Direction>();
-            interactionHandler = new KeyboardInteractionHandler(direction);
-            mapController = new MapController();
             playerNode = mapController.GetNode(2, 2); //TODO make random start position
-            snakeController = new SnakeController(direction);
+            
             snakeController.snakeObj.transform.position = playerNode.worldPosition;
 
-            AddController(mapController);
-            AddController(snakeController);
             snakeController.OnMove += UpdatePlayerPosition;
         }
 
@@ -49,6 +63,11 @@ namespace SnakeGame.Game
                 snakeController.snakeObj.transform.position = targetNode.worldPosition;
                 playerNode = targetNode;
             }
+        }
+
+        protected override void OnDispose()
+        {
+            snakeController.OnMove -= UpdatePlayerPosition;
         }
 
 

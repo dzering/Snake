@@ -1,6 +1,6 @@
 using Object = UnityEngine.Object;
 using UnityEngine;
-using SnakeGame.Tools;
+using SnakeGame.Tools.ResourceManager;
 using SnakeGame.Base;
 
 namespace SnakeGame.Map
@@ -14,6 +14,9 @@ namespace SnakeGame.Map
         private SpriteRenderer mapRender;
 
         private Node[,] grid;
+
+        public int MaxWidth { get; private set; }
+        public int MaxHight { get; private set; }
 
         public MapController()
         {
@@ -40,12 +43,14 @@ namespace SnakeGame.Map
         private void CreateMap()
         {
             mapRender = mapObject.AddComponent<SpriteRenderer>();
-            grid = new Node[mapView.MaxWidth, mapView.MaxHight];
+            MaxWidth = mapView.MaxWidth;
+            MaxHight = mapView.MaxHight;
+            grid = new Node[MaxWidth, MaxHight];
 
-            Texture2D txt = new Texture2D(mapView.MaxWidth, mapView.MaxHight);
-            for (int x = 0; x < mapView.MaxWidth; x++)
+            Texture2D txt = new Texture2D(MaxWidth, MaxHight);
+            for (int x = 0; x < MaxWidth; x++)
             {
-                for (int y = 0; y < mapView.MaxHight; y++)
+                for (int y = 0; y < MaxHight; y++)
                 {
                     Vector3 targetPosition = Vector3.zero;
                     targetPosition.x = x;
@@ -95,7 +100,7 @@ namespace SnakeGame.Map
             txt.Apply();
 
             Rect rect = new Rect(0, 0, mapView.MaxWidth, mapView.MaxHight);
-            Sprite sprite = Sprite.Create(txt, rect, Vector2.one * 0.5f, 1, 0, SpriteMeshType.FullRect); // Изучить метод и его параметры
+            Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect); // Изучить метод и его параметры
             mapRender.sprite = sprite;
         }
 

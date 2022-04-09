@@ -1,4 +1,4 @@
-﻿namespace SnakeGame.Tools
+﻿namespace SnakeGame.Tools.ResourceManager
 {
     public class ResourcePath
     {
