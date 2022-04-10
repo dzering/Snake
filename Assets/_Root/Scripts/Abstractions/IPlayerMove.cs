@@ -2,7 +2,7 @@
 
 namespace SnakeGame.Snake
 {
-    internal interface IMove
+    internal interface IPlayerMove
     {
 
         void Move();
