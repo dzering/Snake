@@ -5,11 +5,13 @@ using SnakeGame.Map;
 using SnakeGame.UserControlSystem;
 using SnakeGame.Tools.Reactive;
 using SnakeGame.Camera;
+using SnakeGame;
 
 namespace SnakeGame.Game
 {
     public class GameController : BaseController
     {
+        private readonly ProfilePlayer profilePlayer;
         private readonly MapController mapController;
         private readonly KeyboardInteractionHandler interactionHandler;
         private readonly SnakeController snakeController;
@@ -21,20 +23,22 @@ namespace SnakeGame.Game
         Node playerNode;
         Node targetNode;
 
-        public GameController()
+        public GameController(ProfilePlayer profilePlayer)
         {
+            this.profilePlayer = profilePlayer;
             direction = new SubscriptionProperty<Direction>();
-
-            interactionHandler = new KeyboardInteractionHandler(direction);
-            AddController(interactionHandler);
-
-            mapController = new MapController();
-            AddController(mapController);
 
             snakeController = new SnakeController(direction);
             AddController(snakeController);
 
+            interactionHandler = new KeyboardInteractionHandler(snakeController);
+            AddController(interactionHandler);
+
+            mapController = new MapController(profilePlayer);
+            AddController(mapController);
+
             cameraController = new CameraController();
+            AddController(cameraController);
 
             Init();
 

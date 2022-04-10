@@ -2,30 +2,31 @@ using UnityEngine;
 using JoostenProductions;
 using SnakeGame.Base;
 using SnakeGame.Tools.Reactive;
+using SnakeGame.Abstractions;
 
 namespace SnakeGame.UserControlSystem
 {
     public class KeyboardInteractionHandler : BaseController
     {
-        SubscriptionProperty<Direction> subscriptionProperty;
+        private readonly IPlayerMove player;
         private bool up, down, left, right;
        
-        public KeyboardInteractionHandler(SubscriptionProperty<Direction> direction)
+        public KeyboardInteractionHandler(IPlayerMove player)
         {
-            subscriptionProperty = direction;
+            this.player = player;
             UpdateManager.SubscribeToUpdate(SetPlayerDirection);
         }
         private void SetPlayerDirection()
         {
             GetInput();
             if (up)
-                subscriptionProperty.Value = Direction.Up;
+                player.Move(Direction.Up);
             if (down)
-                subscriptionProperty.Value = Direction.Down;
+                player.Move(Direction.Down);
             if (left)
-                subscriptionProperty.Value = Direction.Left;
+                player.Move(Direction.Left);
             if (right)
-                subscriptionProperty.Value = Direction.Right;
+                player.Move(Direction.Right);
 
         }
         private void GetInput()
@@ -42,5 +43,6 @@ namespace SnakeGame.UserControlSystem
         {
             UpdateManager.UnsubscribeFromUpdate(SetPlayerDirection);
         }
+
     }
 }

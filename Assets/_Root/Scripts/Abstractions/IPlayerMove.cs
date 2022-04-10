@@ -1,11 +1,13 @@
 ﻿using SnakeGame.Map;
+using SnakeGame.UserControlSystem;
 
-namespace SnakeGame.Snake
+
+namespace SnakeGame.Abstractions
 {
-    internal interface IPlayerMove
+    public interface IPlayerMove
     {
 
-        void Move();
+        void Move(Direction direction);
 
     }
 }

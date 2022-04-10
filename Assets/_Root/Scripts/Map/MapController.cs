@@ -9,6 +9,7 @@ namespace SnakeGame.Map
     {
         private readonly ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
         private readonly MapView mapView;
+        private readonly MapModel mapModel;
 
         private GameObject mapObject;
         private SpriteRenderer mapRender;
@@ -18,8 +19,15 @@ namespace SnakeGame.Map
         public int MaxWidth { get; private set; }
         public int MaxHight { get; private set; }
 
-        public MapController()
+        public MapController(ProfilePlayer profilePlayer)
         {
+            mapModel = profilePlayer.MapModel;
+
+            MaxWidth = mapModel.Grid.GetLength(0);
+            MaxHight = mapModel.Grid.GetLength(1);
+
+            grid = mapModel.Grid;
+
             mapView = LoadView();
             AddGameObject(mapObject);
             CreateMap();
@@ -34,7 +42,7 @@ namespace SnakeGame.Map
 
         public Node GetNode(int x, int y)
         {
-            if (x < 0 || x > mapView.MaxWidth - 1 ||  y < 0 || y > mapView.MaxHight - 1)
+            if (x < 0 || x > MaxWidth - 1 ||  y < 0 || y > MaxHight - 1)
                 return null;
 
             return grid[x, y];
@@ -43,27 +51,13 @@ namespace SnakeGame.Map
         private void CreateMap()
         {
             mapRender = mapObject.AddComponent<SpriteRenderer>();
-            MaxWidth = mapView.MaxWidth;
-            MaxHight = mapView.MaxHight;
-            grid = new Node[MaxWidth, MaxHight];
 
             Texture2D txt = new Texture2D(MaxWidth, MaxHight);
             for (int x = 0; x < MaxWidth; x++)
             {
                 for (int y = 0; y < MaxHight; y++)
                 {
-                    Vector3 targetPosition = Vector3.zero;
-                    targetPosition.x = x;
-                    targetPosition.y = y;
-
-                    Node node = new Node()
-                    {
-                        X = x,
-                        Y = y,
-                        worldPosition = targetPosition
-                    };
-
-                    grid[x, y] = node;
+                    mapModel.FillGrid(x, y);
 
                     #region Visual
                     if (x % 2 != 0)
@@ -92,11 +86,9 @@ namespace SnakeGame.Map
                     #endregion
 
                 }
-
             }
-
+            
             txt.filterMode = FilterMode.Point;
-
             txt.Apply();
 
             Rect rect = new Rect(0, 0, mapView.MaxWidth, mapView.MaxHight);

@@ -20,7 +20,6 @@ public class CameraController : BaseController
         GameObject obj = UnityEngine.Object.Instantiate(pref);
 
         return obj.GetComponent<CameraView>();
-
     }
 
     public void SetCamPos(Vector3 worldPosition)

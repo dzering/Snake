@@ -6,11 +6,18 @@ namespace SnakeGame
 {
     public class Root : MonoBehaviour
     {
+        private MainController mainController;
+        private ProfilePlayer profilePlayer;
         
         void Start()
         {
-            new GameController();
+            profilePlayer = new ProfilePlayer();
+            mainController = new MainController(profilePlayer);
+        }
 
+        private void OnDestroy()
+        {
+            mainController?.Dispose();
         }
 
     }

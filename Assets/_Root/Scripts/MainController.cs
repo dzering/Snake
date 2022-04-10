@@ -1,15 +1,19 @@
 ﻿using SnakeGame.Base;
+using SnakeGame.Game;
 
 
 namespace SnakeGame
 {
     public class MainController : BaseController
     {
-        private readonly MainModel mainModel;
+        private readonly ProfilePlayer profilePlayer;
+        private readonly GameController gameController;
 
-        public MainController(MainModel mainModel)
+        public MainController(ProfilePlayer profilePlayer)
         {
-            this.mainModel = mainModel;
+            this.profilePlayer = profilePlayer;
+            gameController = new GameController(profilePlayer);
+            AddController(gameController);
         }
     }
 }

@@ -3,10 +3,11 @@ using SnakeGame.Base;
 using SnakeGame.Tools.Reactive;
 using SnakeGame.UserControlSystem;
 using System;
+using SnakeGame.Abstractions;
 
 namespace SnakeGame.Snake
 {
-    class SnakeController : BaseController
+    class SnakeController : BaseController, IPlayerMove
     {
         public Action<int, int> OnMove;
 
@@ -84,6 +85,25 @@ namespace SnakeGame.Snake
         protected override void OnDispose()
         {
             moveDirection.UnsubscribeOnChange(MovePlayer);
+        }
+
+        public void Move(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    Y = 1;
+                    break;
+                case Direction.Down:
+                    Y = -1;
+                    break;
+                case Direction.Left:
+                    X = -1;
+                    break;
+                case Direction.Right:
+                    X = 1;
+                    break;
+            }
         }
     }
 }
