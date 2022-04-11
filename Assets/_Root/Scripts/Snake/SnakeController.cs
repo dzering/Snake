@@ -5,6 +5,9 @@ using SnakeGame.UserControlSystem;
 using System;
 using SnakeGame.Abstractions;
 
+
+using JoostenProductions;
+
 namespace SnakeGame.Snake
 {
     class SnakeController : BaseController, IPlayerMove
@@ -14,6 +17,11 @@ namespace SnakeGame.Snake
         private Color snakeColor;
         public GameObject snakeObj;
         IReadOnlySubscriptionProperty<Direction> moveDirection;
+
+        private Direction currentDirection = Direction.Right;
+
+        private float rateTime = 0.5f;
+        private float timer;
 
         public int X {
             set 
@@ -40,7 +48,8 @@ namespace SnakeGame.Snake
             this.moveDirection = moveDirection;
             snakeColor = Color.black;
             CreateSnake();
-            moveDirection.SubscribeOnChange(MovePlayer);
+            moveDirection.SubscribeOnChange(Move);
+            UpdateManager.SubscribeToUpdate(MovePlayer);
         }
 
         private void CreateSnake()
@@ -62,48 +71,55 @@ namespace SnakeGame.Snake
 
         }
 
-        private void MovePlayer(Direction direction)
+        public void Move(Direction direction)
         {
+                switch (direction)
+                {
+                    case Direction.Up:
+                        timer = 0;
+                        Y = 1;
+                        currentDirection = direction;
+                        break;
 
-            switch (direction)
+                    case Direction.Down:
+                        timer = 0;
+                        Y = -1;
+                        currentDirection = direction;
+                        break;
+
+                    case Direction.Left:
+                        timer = 0;
+                        X = -1;
+                        currentDirection = direction;
+                        break;
+
+                    case Direction.Right:
+                        timer = 0;
+                        X = 1;
+                        currentDirection = direction;
+                        break;
+                }
+        }
+
+        private void MovePlayer()
+        {
+            timer += Time.deltaTime;
+            if(timer > rateTime)
             {
-                case Direction.Up:
-                    Y = 1;
-                    break;
-                case Direction.Down:
-                    Y = -1;
-                    break;
-                case Direction.Left:
-                    X = -1;
-                    break;
-                case Direction.Right:
-                    X = 1;
-                    break;
+                timer = 0;
+                Move(currentDirection);
             }
         }
 
         protected override void OnDispose()
         {
-            moveDirection.UnsubscribeOnChange(MovePlayer);
+            moveDirection.UnsubscribeOnChange(Move);
+            UpdateManager.UnsubscribeFromUpdate(MovePlayer);
         }
 
-        public void Move(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    Y = 1;
-                    break;
-                case Direction.Down:
-                    Y = -1;
-                    break;
-                case Direction.Left:
-                    X = -1;
-                    break;
-                case Direction.Right:
-                    X = 1;
-                    break;
-            }
-        }
+        
+        
+
+
     }
 }

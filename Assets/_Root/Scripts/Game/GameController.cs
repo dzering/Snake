@@ -49,9 +49,7 @@ namespace SnakeGame.Game
         private void Init()
         {
             playerNode = profilePlayer.MapModel.GetNode(2,2); //TODO make random start position
-            
             snakeController.snakeObj.transform.position = playerNode.worldPosition;
-
             snakeController.OnMove += UpdatePlayerPosition;
         }
 
