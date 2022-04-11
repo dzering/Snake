@@ -8,10 +8,10 @@ namespace SnakeGame.UserControlSystem
 {
     public class KeyboardInteractionHandler : BaseController
     {
-        private readonly IPlayerMove player;
+        private readonly IPlayerMoveDirection player;
         private bool up, down, left, right;
        
-        public KeyboardInteractionHandler(IPlayerMove player)
+        public KeyboardInteractionHandler(IPlayerMoveDirection player)
         {
             this.player = player;
             UpdateManager.SubscribeToUpdate(SetPlayerDirection);
@@ -20,13 +20,13 @@ namespace SnakeGame.UserControlSystem
         {
             GetInput();
             if (up)
-                player.Move(Direction.Up);
+                player.CurrentDirection = (Direction.Up);
             if (down)
-                player.Move(Direction.Down);
+                player.CurrentDirection = (Direction.Down);
             if (left)
-                player.Move(Direction.Left);
+                player.CurrentDirection = (Direction.Left);
             if (right)
-                player.Move(Direction.Right);
+                player.CurrentDirection = (Direction.Right);
 
         }
         private void GetInput()

@@ -4,10 +4,10 @@ using SnakeGame.UserControlSystem;
 
 namespace SnakeGame.Abstractions
 {
-    public interface IPlayerMove
+    public interface IPlayerMoveDirection
     {
 
-        void Move(Direction direction);
+        Direction CurrentDirection { get; set; }
 
     }
 }

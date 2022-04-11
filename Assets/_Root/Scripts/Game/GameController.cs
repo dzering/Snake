@@ -18,17 +18,14 @@ namespace SnakeGame.Game
         private readonly CameraController cameraController;
 
 
-        private SubscriptionProperty<Direction> direction;
-
         Node playerNode;
         Node targetNode;
 
         public GameController(ProfilePlayer profilePlayer)
         {
             this.profilePlayer = profilePlayer;
-            direction = new SubscriptionProperty<Direction>();
 
-            snakeController = new SnakeController(direction);
+            snakeController = new SnakeController();
             AddController(snakeController);
 
             interactionHandler = new KeyboardInteractionHandler(snakeController);

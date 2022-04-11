@@ -10,18 +10,17 @@ using JoostenProductions;
 
 namespace SnakeGame.Snake
 {
-    class SnakeController : BaseController, IPlayerMove
+    class SnakeController : BaseController, IPlayerMoveDirection
     {
         public Action<int, int> OnMove;
 
         private Color snakeColor;
         public GameObject snakeObj;
-        IReadOnlySubscriptionProperty<Direction> moveDirection;
+
+        private float rateTime = 0.2f;
+        private float timer;
 
         private Direction currentDirection = Direction.Right;
-
-        private float rateTime = 0.5f;
-        private float timer;
 
         public int X {
             set 
@@ -42,13 +41,18 @@ namespace SnakeGame.Snake
             }
         }
 
+        public Direction CurrentDirection {
+            get { return currentDirection; }
+            set 
+            {
+                    currentDirection = value; 
+            }
+        }
 
-        public SnakeController(IReadOnlySubscriptionProperty<Direction> moveDirection)
+        public SnakeController()
         {
-            this.moveDirection = moveDirection;
             snakeColor = Color.black;
             CreateSnake();
-            moveDirection.SubscribeOnChange(Move);
             UpdateManager.SubscribeToUpdate(MovePlayer);
         }
 
@@ -71,32 +75,28 @@ namespace SnakeGame.Snake
 
         }
 
-        public void Move(Direction direction)
+        private void Move()
         {
-                switch (direction)
+                switch (currentDirection)
                 {
                     case Direction.Up:
                         timer = 0;
                         Y = 1;
-                        currentDirection = direction;
                         break;
 
                     case Direction.Down:
                         timer = 0;
                         Y = -1;
-                        currentDirection = direction;
                         break;
 
                     case Direction.Left:
                         timer = 0;
                         X = -1;
-                        currentDirection = direction;
                         break;
 
                     case Direction.Right:
                         timer = 0;
                         X = 1;
-                        currentDirection = direction;
                         break;
                 }
         }
@@ -107,13 +107,12 @@ namespace SnakeGame.Snake
             if(timer > rateTime)
             {
                 timer = 0;
-                Move(currentDirection);
+                Move();
             }
         }
 
         protected override void OnDispose()
         {
-            moveDirection.UnsubscribeOnChange(Move);
             UpdateManager.UnsubscribeFromUpdate(MovePlayer);
         }
 

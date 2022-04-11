@@ -40,14 +40,6 @@ namespace SnakeGame.Map
             return mapObject.GetComponent<MapView>();
         }
 
-        //public Node GetNode(int x, int y)
-        //{
-        //    if (x < 0 || x > MaxWidth - 1 ||  y < 0 || y > MaxHight - 1)
-        //        return null;
-
-        //    return grid[x, y];
-        //}
-
         private void CreateMap()
         {
             mapRender = mapObject.AddComponent<SpriteRenderer>();
