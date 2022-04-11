@@ -28,5 +28,12 @@ namespace SnakeGame.Map
 
             Grid[x, y] = node;
         }
+        public Node GetNode(int x, int y)
+        {
+            if (x < 0 || x > Grid.GetLength(0) - 1 || y < 0 || y > Grid.GetLength(1) - 1)
+                return null;
+
+            return Grid[x, y];
+        }
     }
 }

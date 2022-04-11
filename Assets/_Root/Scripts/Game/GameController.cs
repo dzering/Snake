@@ -42,13 +42,13 @@ namespace SnakeGame.Game
 
             Init();
 
-            cameraController.SetCamPos(mapController.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
+            cameraController.SetCamPos(profilePlayer.MapModel.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
 
         }
 
         private void Init()
         {
-            playerNode = mapController.GetNode(2, 2); //TODO make random start position
+            playerNode = profilePlayer.MapModel.GetNode(2,2); //TODO make random start position
             
             snakeController.snakeObj.transform.position = playerNode.worldPosition;
 
@@ -57,7 +57,7 @@ namespace SnakeGame.Game
 
         private void UpdatePlayerPosition(int x, int y)
         {
-            targetNode = mapController.GetNode(playerNode.X + x, playerNode.Y + y);
+            targetNode = profilePlayer.MapModel.GetNode(playerNode.X + x, playerNode.Y + y);
             if(targetNode == null)
             {
                 Debug.Log("Game Over"); // GameOver

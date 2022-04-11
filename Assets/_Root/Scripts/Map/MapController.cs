@@ -40,13 +40,13 @@ namespace SnakeGame.Map
             return mapObject.GetComponent<MapView>();
         }
 
-        public Node GetNode(int x, int y)
-        {
-            if (x < 0 || x > MaxWidth - 1 ||  y < 0 || y > MaxHight - 1)
-                return null;
+        //public Node GetNode(int x, int y)
+        //{
+        //    if (x < 0 || x > MaxWidth - 1 ||  y < 0 || y > MaxHight - 1)
+        //        return null;
 
-            return grid[x, y];
-        }
+        //    return grid[x, y];
+        //}
 
         private void CreateMap()
         {
@@ -91,7 +91,7 @@ namespace SnakeGame.Map
             txt.filterMode = FilterMode.Point;
             txt.Apply();
 
-            Rect rect = new Rect(0, 0, mapView.MaxWidth, mapView.MaxHight);
+            Rect rect = new Rect(0, 0, mapModel.Grid.GetLength(0), mapModel.Grid.GetLength(1));
             Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect); // Изучить метод и его параметры
             mapRender.sprite = sprite;
         }
