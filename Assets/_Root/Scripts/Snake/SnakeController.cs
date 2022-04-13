@@ -13,8 +13,6 @@ namespace SnakeGame.Snake
     class SnakeController : BaseController, IPlayerMoveDirection
     {
         public Action<int, int> OnMove;
-
-        private Color snakeColor;
         public GameObject snakeObj;
 
         private float rateTime = 0.2f;
@@ -51,28 +49,8 @@ namespace SnakeGame.Snake
 
         public SnakeController()
         {
-            snakeColor = Color.black;
-            CreateSnake();
+            snakeObj = new SnakeView().snakeObj;
             UpdateManager.SubscribeToUpdate(MovePlayer);
-        }
-
-        private void CreateSnake()
-        {
-            snakeObj = new GameObject("Player");
-            SpriteRenderer snakeRenderer = snakeObj.AddComponent<SpriteRenderer>();
-            snakeRenderer.sprite = CreateSprite();
-            snakeRenderer.sortingOrder = 1;
-        }
-
-        private Sprite CreateSprite()
-        {
-            Texture2D txt = new Texture2D(1,1);
-            txt.SetPixel(0, 0, snakeColor);
-            txt.Apply();
-            txt.filterMode = FilterMode.Point;
-            Rect rect = new Rect(0, 0, 1, 1);
-            return Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect);
-
         }
 
         private void Move()

@@ -5,6 +5,7 @@ using SnakeGame.Base;
 using SnakeGame.Content.Fruits;
 using System;
 using SnakeGame.Tools.ResourceManager;
+using Object = UnityEngine.Object;
 
 public class FruitController : BaseController
 {
@@ -18,6 +19,8 @@ public class FruitController : BaseController
 
     private FruitView LoadView()
     {
-        throw new NotImplementedException();
+        GameObject pref = ResourceLoader.LoadPrefab(path);
+        GameObject go = Object.Instantiate(pref);
+        return go.GetComponent<FruitView>();
     }
 }
