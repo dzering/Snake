@@ -11,7 +11,11 @@ namespace SnakeGame.Snake
         {
             snakeColor = Color.yellow;
             CreateSnake();
+        }
 
+        public void UpdateView(Vector3 worldPosition)
+        {
+            snakeObj.transform.position = worldPosition;
         }
 
         private void CreateSnake()
@@ -30,7 +34,6 @@ namespace SnakeGame.Snake
             txt.filterMode = FilterMode.Point;
             Rect rect = new Rect(0, 0, 1, 1);
             return Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect);
-
         }
     }
 }

@@ -5,15 +5,17 @@ namespace SnakeGame
 {
     public class SnakeModel
     {
-        public Action<int, int> OnChange;
+        public Action<int, int> OnChangeMove;
+        public Action<Vector3> OnChangePosition;
         private int x;
         private int y;
+        private Vector3 snakeWorldPosition;
 
         public int X { get => x; 
             set 
             {
                     x = value;
-                    OnChange?.Invoke(x, default);
+                    OnChangeMove?.Invoke(x, default);
             }
         }
         public int Y
@@ -22,7 +24,17 @@ namespace SnakeGame
             set
             {
                 y = value;
-                OnChange?.Invoke(default, y);
+                OnChangeMove?.Invoke(default, y);
+            }
+        }
+
+        public Vector3 SnakeWorldPosition
+        {
+            get => snakeWorldPosition;
+            set
+            {
+                snakeWorldPosition = value;
+                OnChangePosition(snakeWorldPosition);                
             }
         }
     }

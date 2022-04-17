@@ -12,8 +12,8 @@ namespace SnakeGame.Snake
 {
     class SnakeController : BaseController, IPlayerMoveDirection
     {
-        public GameObject snakeObj;
         public readonly SnakeModel snakeModel;
+        private readonly SnakeView snakeView;
 
         private float rateTime = 0.5f;
         private float timer;
@@ -31,7 +31,8 @@ namespace SnakeGame.Snake
         public SnakeController()
         {
             snakeModel = new SnakeModel();
-            snakeObj = new SnakeView().snakeObj;
+            snakeView = new SnakeView();
+            snakeModel.OnChangePosition += snakeView.UpdateView;
             UpdateManager.SubscribeToUpdate(MovePlayer);
         }
 
@@ -70,6 +71,7 @@ namespace SnakeGame.Snake
         protected override void OnDispose()
         {
             UpdateManager.UnsubscribeFromUpdate(MovePlayer);
+            snakeModel.OnChangePosition -= snakeView.UpdateView;
         }
 
     }
