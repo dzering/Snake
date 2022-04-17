@@ -7,10 +7,12 @@ namespace SnakeGame.Map
     public class MapModel
     {
         public Node[,] Grid { get; private set; }
+        public List<Node> avaliableNodes;
 
         public MapModel(int x, int y)
         {
             Grid = new Node[x, y];
+            avaliableNodes = new List<Node>();
         }
 
         public void FillGrid(int x, int y)
@@ -27,7 +29,18 @@ namespace SnakeGame.Map
             };
 
             Grid[x, y] = node;
+            avaliableNodes.Add(node);
         }
+
+        public Vector3 GetFreePosition()
+        {
+            int num = Random.Range(0, avaliableNodes.Count);
+            Node n = avaliableNodes[num];
+            avaliableNodes.Remove(n);
+
+            return n.worldPosition;
+        }
+
         public Node GetNode(int x, int y)
         {
             if (x < 0 || x > Grid.GetLength(0) - 1 || y < 0 || y > Grid.GetLength(1) - 1)

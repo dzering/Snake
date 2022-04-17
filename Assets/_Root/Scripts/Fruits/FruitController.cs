@@ -2,25 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SnakeGame.Base;
-using SnakeGame.Content.Fruits;
 using System;
 using SnakeGame.Tools.ResourceManager;
 using Object = UnityEngine.Object;
+using SnakeGame.Map;
 
-public class FruitController : BaseController
+namespace SnakeGame.Content.Fruits
 {
-    private FruitView fruit;
-    private ResourcePath path = new ResourcePath() { Path = "Prefabs/Fruit" };
-
-    public FruitController()
+    public class FruitController : BaseController
     {
-        fruit = LoadView();
-    }
+        //TODO: refactoring
 
-    private FruitView LoadView()
-    {
-        GameObject pref = ResourceLoader.LoadPrefab(path);
-        GameObject go = Object.Instantiate(pref);
-        return go.GetComponent<FruitView>();
+        //private FruitView fruit;
+        //private ResourcePath path = new ResourcePath() { Path = "Prefabs/Fruit" };
+
+        private FruitView view;
+
+        public FruitController(Vector3 worldPosition)
+        {
+            view = new FruitView();
+            view.GO.transform.position = worldPosition;
+
+            //fruit = LoadView();
+        }
+
+        //private FruitView LoadView()
+        //{
+        //    GameObject pref = ResourceLoader.LoadPrefab(path);
+        //    GameObject go = Object.Instantiate(pref);
+        //    return go.GetComponent<FruitView>();
+        //}
     }
 }

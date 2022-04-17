@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using SnakeGame.Base;
+
 
 namespace SnakeGame.Content.Fruits
 {
-    public class FruitView : MonoBehaviour
+    public class FruitView : BaseView
     {
-        [SerializeField] GameObject fruit;
+        public GameObject GO;
+        public FruitView()
+        {
+            GO = CreateView(Color.red);
+        }
+
     }
 }

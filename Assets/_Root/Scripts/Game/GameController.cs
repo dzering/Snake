@@ -6,6 +6,7 @@ using SnakeGame.UserControlSystem;
 using SnakeGame.Tools.Reactive;
 using SnakeGame.Camera;
 using SnakeGame;
+using SnakeGame.Content.Fruits;
 
 namespace SnakeGame.Game
 {
@@ -38,6 +39,8 @@ namespace SnakeGame.Game
             AddController(cameraController);
 
             Init();
+
+            new FruitController(profilePlayer.MapModel.GetFreePosition());
 
             cameraController.SetCamPos(profilePlayer.MapModel.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
 
