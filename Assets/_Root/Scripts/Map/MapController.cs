@@ -84,7 +84,7 @@ namespace SnakeGame.Map
             txt.Apply();
 
             Rect rect = new Rect(0, 0, mapModel.Grid.GetLength(0), mapModel.Grid.GetLength(1));
-            Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect); // Изучить метод и его параметры
+            Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             mapRender.sprite = sprite;
         }
 

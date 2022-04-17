@@ -47,7 +47,7 @@ namespace SnakeGame.Game
         {
             playerNode = profilePlayer.MapModel.GetNode(2,2); //TODO make random start position
             snakeController.snakeObj.transform.position = playerNode.worldPosition;
-            snakeController.OnMove += UpdatePlayerPosition;
+            snakeController.snakeModel.OnChange += UpdatePlayerPosition;
         }
 
         private void UpdatePlayerPosition(int x, int y)
@@ -66,7 +66,7 @@ namespace SnakeGame.Game
 
         protected override void OnDispose()
         {
-            snakeController.OnMove -= UpdatePlayerPosition;
+            snakeController.snakeModel.OnChange -= UpdatePlayerPosition;
         }
 
 

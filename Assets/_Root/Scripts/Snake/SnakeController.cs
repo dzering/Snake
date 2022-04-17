@@ -12,32 +12,13 @@ namespace SnakeGame.Snake
 {
     class SnakeController : BaseController, IPlayerMoveDirection
     {
-        public Action<int, int> OnMove;
         public GameObject snakeObj;
+        public readonly SnakeModel snakeModel;
 
         private float rateTime = 0.5f;
         private float timer;
 
         private Direction currentDirection = Direction.Right;
-
-        public int X {
-            set 
-            {
-                if(OnMove != null)
-                {
-                    OnMove?.Invoke(value, default);
-                }
-            } 
-        }
-        public int Y {
-            set
-            {
-                if (OnMove != null)
-                {
-                    OnMove?.Invoke(default, value);
-                }
-            }
-        }
 
         public Direction CurrentDirection {
             get { return currentDirection; }
@@ -49,6 +30,7 @@ namespace SnakeGame.Snake
 
         public SnakeController()
         {
+            snakeModel = new SnakeModel();
             snakeObj = new SnakeView().snakeObj;
             UpdateManager.SubscribeToUpdate(MovePlayer);
         }
@@ -58,23 +40,19 @@ namespace SnakeGame.Snake
                 switch (currentDirection)
                 {
                     case Direction.Up:
-                       // timer = 0;
-                        Y = 1;
+                        snakeModel.Y = 1;
                         break;
 
                     case Direction.Down:
-                       // timer = 0;
-                        Y = -1;
+                        snakeModel.Y = -1;
                         break;
 
                     case Direction.Left:
-                       // timer = 0;
-                        X = -1;
+                        snakeModel.X = -1;
                         break;
 
                     case Direction.Right:
-                       // timer = 0;
-                        X = 1;
+                        snakeModel.X = 1;
                         break;
                 }
         }
