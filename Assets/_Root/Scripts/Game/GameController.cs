@@ -40,7 +40,8 @@ namespace SnakeGame.Game
 
             Init();
 
-            new FruitController(profilePlayer.MapModel.GetFreePosition());
+            //new FruitController(profilePlayer.MapModel.GetFreePosition());
+            FruitBase.CreateFruit(profilePlayer.MapModel.GetFreePosition());
 
             cameraController.SetCamPos(profilePlayer.MapModel.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
 
