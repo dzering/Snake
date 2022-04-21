@@ -6,31 +6,29 @@ using System;
 using SnakeGame.Tools.ResourceManager;
 using Object = UnityEngine.Object;
 using SnakeGame.Map;
+using SnakeGame.Abstractions;
 
 namespace SnakeGame.Content.Fruits
 {
-    public class FruitController : BaseController
+    public class FruitController : BaseController, IFruit
     {
-        //TODO: refactoring
+        private readonly GameObject go;
+        private readonly BaseView view;
 
-        //private FruitView fruit;
-        //private ResourcePath path = new ResourcePath() { Path = "Prefabs/Fruit" };
-
-        private FruitView view;
-
-        public FruitController(Vector3 worldPosition)
+        public FruitController()
         {
             view = new FruitView();
-            view.GO.transform.position = worldPosition;
-
-            //fruit = LoadView();
+            AddGameObject(view.GO);
+            go = view.GO;
         }
 
-        //private FruitView LoadView()
-        //{
-        //    GameObject pref = ResourceLoader.LoadPrefab(path);
-        //    GameObject go = Object.Instantiate(pref);
-        //    return go.GetComponent<FruitView>();
-        //}
+        public FruitController(Vector3 worldPosition) : base()
+        {
+            view.GO.transform.position = worldPosition;
+        }
+        public void SetPosition(Vector3 position)
+        {
+            go.transform.position = position;
+        }
     }
 }

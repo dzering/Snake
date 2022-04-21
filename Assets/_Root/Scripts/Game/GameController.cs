@@ -7,6 +7,7 @@ using SnakeGame.Tools.Reactive;
 using SnakeGame.Camera;
 using SnakeGame;
 using SnakeGame.Content.Fruits;
+using SnakeGame.Abstractions;
 
 namespace SnakeGame.Game
 {
@@ -17,6 +18,7 @@ namespace SnakeGame.Game
         private readonly KeyboardInteractionHandler interactionHandler;
         private readonly SnakeController snakeController;
         private readonly CameraController cameraController;
+        private readonly Spawner spawner;
 
 
         Node playerNode;
@@ -40,8 +42,9 @@ namespace SnakeGame.Game
 
             Init();
 
-            //new FruitController(profilePlayer.MapModel.GetFreePosition());
-            FruitBase.CreateFruit(profilePlayer.MapModel.GetFreePosition());
+            spawner = new Spawner();
+            AddController(spawner);
+            spawner.CreateFruit(EnumFruits.Pear).SetPosition(profilePlayer.MapModel.GetFreePosition());
 
             cameraController.SetCamPos(profilePlayer.MapModel.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
 

@@ -4,16 +4,18 @@
 
 namespace SnakeGame.Base
 {
-    public class BaseView
+    public abstract class BaseView
     {
+        public GameObject GO;
+
         protected GameObject CreateView(Color color)
         {
-            GameObject go = new GameObject("Player");
-            SpriteRenderer snakeRenderer = go.AddComponent<SpriteRenderer>();
+            GO = new GameObject("Fruit");
+            SpriteRenderer snakeRenderer = GO.AddComponent<SpriteRenderer>();
             snakeRenderer.sprite = CreateSprite(color);
             snakeRenderer.sortingOrder = 1;
 
-            return go;
+            return GO;
         }
 
         private Sprite CreateSprite(Color color)
