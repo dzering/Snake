@@ -8,6 +8,7 @@ using SnakeGame.Camera;
 using SnakeGame;
 using SnakeGame.Content.Fruits;
 using SnakeGame.Abstractions;
+using System;
 
 namespace SnakeGame.Game
 {
@@ -23,6 +24,9 @@ namespace SnakeGame.Game
 
         Node playerNode;
         Node targetNode;
+        Node fruitNode;
+
+        IFruit fruit;
 
         public GameController(ProfilePlayer profilePlayer)
         {
@@ -44,10 +48,24 @@ namespace SnakeGame.Game
 
             spawner = new Spawner();
             AddController(spawner);
-            spawner.CreateFruit(EnumFruits.Pear).SetPosition(profilePlayer.MapModel.GetFreePosition());
+
+            // spawn fruit
+
+            fruit = spawner.CreateFruit(EnumFruits.Pear);
+            SetFruitPosition(fruit);
 
             cameraController.SetCamPos(profilePlayer.MapModel.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
 
+        }
+
+        private void SetFruitPosition(IFruit fruit)
+        {
+            if (fruit != null)
+                profilePlayer.MapModel.AddNodeToAvaliable(fruitNode);
+            Node node = profilePlayer.MapModel.GetAvaliableNode();
+            fruit.SetPosition(node.worldPosition);
+            fruitNode = node;
+            profilePlayer.MapModel.RemoveNode(fruitNode);
         }
 
         private void Init()
@@ -66,9 +84,36 @@ namespace SnakeGame.Game
             }
             else
             {
+                bool isScore = false;
+
+                if (playerNode == fruitNode)
+                {
+                    isScore = true;
+
+                }
+
                 snakeController.snakeModel.SnakeWorldPosition = targetNode.worldPosition;
                 playerNode = targetNode;
+
+                //TODO Move Tail;
+
+                if (isScore)
+                {
+                    //TODO If avaliable node == 0, you win;
+
+                    SetFruitPosition(fruit);
+                    CreateTale();
+
+                    //TODO You Have Scored;
+                }
+
             }
+
+        }
+
+        private void CreateTale()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void OnDispose()

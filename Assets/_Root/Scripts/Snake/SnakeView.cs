@@ -12,6 +12,7 @@ namespace SnakeGame.Snake
         {
             snakeColor = Color.yellow;
             snakeObj = CreateView(snakeColor);
+            snakeObj.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
 
         public void UpdateView(Vector3 worldPosition)

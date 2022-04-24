@@ -15,7 +15,7 @@ namespace SnakeGame.Snake
         public readonly SnakeModel snakeModel;
         private readonly SnakeView snakeView;
 
-        private float rateTime = 0.5f;
+        private float rateTime = 0.2f;
         private float timer;
 
         private Direction currentDirection = Direction.Right;

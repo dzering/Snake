@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxWidth: 17
   MaxHight: 15
-  Color1: {r: 0.32941175, g: 1, b: 0, a: 1}
+  Color1: {r: 0.23921569, g: 0.27450982, b: 0.027450982, a: 1}
   Color2: {r: 0.10741558, g: 0.2735849, b: 0.02710039, a: 1}
