@@ -7,6 +7,8 @@ using SnakeGame.Abstractions;
 
 
 using JoostenProductions;
+using System.Collections.Generic;
+using SnakeGame.Map;
 
 namespace SnakeGame.Snake
 {
@@ -14,6 +16,8 @@ namespace SnakeGame.Snake
     {
         public readonly SnakeModel snakeModel;
         private readonly SnakeView snakeView;
+        private readonly List<TailNodeView> tail;
+       
 
         private float rateTime = 0.2f;
         private float timer;
@@ -32,8 +36,33 @@ namespace SnakeGame.Snake
         {
             snakeModel = new SnakeModel();
             snakeView = new SnakeView();
+            tail = new List<TailNodeView>();
             snakeModel.OnChangePosition += snakeView.UpdateView;
             UpdateManager.SubscribeToUpdate(MovePlayer);
+        }
+
+        public void Eating(Node node)
+        {
+            TailNodeView tailNode = new TailNodeView();
+            tail.Add(tailNode);
+            tailNode.Node = node;
+            tailNode.GO.transform.position = node.worldPosition;
+        }
+
+        public void MoveTail(Node prevNode)
+        {
+            if (tail.Count == 0)
+                return;
+
+            Node prev = prevNode;
+            for (int i = 0; i < tail.Count; i++)
+            {
+                Node tempNode = tail[i].Node;
+
+                tail[i].Node = prev;
+                prev = tempNode;
+                tail[i].GO.transform.position = tail[i].Node.worldPosition;
+            }
         }
 
         private void Move()

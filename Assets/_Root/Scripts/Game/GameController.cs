@@ -23,7 +23,7 @@ namespace SnakeGame.Game
 
 
         Node playerNode;
-        Node targetNode;
+        Node nextNode;
         Node fruitNode;
 
         IFruit fruit;
@@ -58,15 +58,6 @@ namespace SnakeGame.Game
 
         }
 
-        private void SetFruitPosition(IFruit fruit)
-        {
-            if (fruit != null)
-                profilePlayer.MapModel.AddNodeToAvaliable(fruitNode);
-            Node node = profilePlayer.MapModel.GetAvaliableNode();
-            fruit.SetPosition(node.worldPosition);
-            fruitNode = node;
-            profilePlayer.MapModel.RemoveNode(fruitNode);
-        }
 
         private void Init()
         {
@@ -74,11 +65,21 @@ namespace SnakeGame.Game
             snakeController.snakeModel.SnakeWorldPosition = playerNode.worldPosition;
             snakeController.snakeModel.OnChangeMove += UpdatePlayerPosition;
         }
+        private void SetFruitPosition(IFruit fruit)
+        {
+            Node node = profilePlayer.MapModel.GetAvaliableNode();
+            fruit.SetPosition(node.worldPosition);
+            fruitNode = node;
+            profilePlayer.MapModel.RemoveNode(fruitNode);
+        }
 
         private void UpdatePlayerPosition(int x, int y)
         {
-            targetNode = profilePlayer.MapModel.GetNode(playerNode.X + x, playerNode.Y + y);
-            if(targetNode == null)
+            Node prevNode = playerNode;
+            nextNode = profilePlayer.MapModel.GetNode(playerNode.X + x, playerNode.Y + y);
+            snakeController.MoveTail(prevNode);
+
+            if(nextNode == null)
             {
                 Debug.Log("Game Over"); // GameOver
             }
@@ -89,11 +90,10 @@ namespace SnakeGame.Game
                 if (playerNode == fruitNode)
                 {
                     isScore = true;
-
                 }
 
-                snakeController.snakeModel.SnakeWorldPosition = targetNode.worldPosition;
-                playerNode = targetNode;
+                snakeController.snakeModel.SnakeWorldPosition = nextNode.worldPosition;
+                playerNode = nextNode;
 
                 //TODO Move Tail;
 
@@ -101,19 +101,16 @@ namespace SnakeGame.Game
                 {
                     //TODO If avaliable node == 0, you win;
 
+                    snakeController.Eating(fruitNode);
+                    profilePlayer.MapModel.RemoveNode(fruitNode);
+
                     SetFruitPosition(fruit);
-                    CreateTale();
 
                     //TODO You Have Scored;
                 }
 
             }
 
-        }
-
-        private void CreateTale()
-        {
-            throw new NotImplementedException();
         }
 
         protected override void OnDispose()

@@ -10,11 +10,9 @@ namespace SnakeGame
 
         public ProfilePlayer()
         {
-            MapModel = new MapModel(15, 15);
+            MapModel = new MapModel(8, 8);
         }
     }
-
-
 
     public enum GameState
     {
