@@ -1,21 +1,18 @@
 ﻿using UnityEngine;
 
-
-
 namespace SnakeGame.Base
 {
     public abstract class BaseView
     {
-        public GameObject GO;
-
+        public GameObject Obj;
         protected GameObject CreateView(Color color)
         {
-            GO = new GameObject("Fruit");
-            SpriteRenderer snakeRenderer = GO.AddComponent<SpriteRenderer>();
+            Obj = new GameObject();
+            SpriteRenderer snakeRenderer = Obj.AddComponent<SpriteRenderer>();
             snakeRenderer.sprite = CreateSprite(color);
             snakeRenderer.sortingOrder = 1;
 
-            return GO;
+            return Obj;
         }
 
         private Sprite CreateSprite(Color color)

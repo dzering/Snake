@@ -18,13 +18,13 @@ namespace SnakeGame.Content.Fruits
         public FruitController()
         {
             view = new FruitView();
-            AddGameObject(view.GO);
-            go = view.GO;
+            AddGameObject(view.Obj);
+            go = view.Obj;
         }
 
         public FruitController(Vector3 worldPosition) : base()
         {
-            view.GO.transform.position = worldPosition;
+            view.Obj.transform.position = worldPosition;
         }
         public void SetPosition(Vector3 position)
         {

@@ -9,7 +9,7 @@ namespace SnakeGame.Snake
         public Node Node { get; set; }
         public TailNodeView()
         {
-            CreateView(Color.gray);
+            Obj = CreateView(Color.gray);
         }
 
     }

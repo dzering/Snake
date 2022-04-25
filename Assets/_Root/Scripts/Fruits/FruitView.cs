@@ -8,7 +8,7 @@ namespace SnakeGame.Content.Fruits
     {
         public FruitView()
         {
-            GO = CreateView(Color.red);
+            Obj = CreateView(Color.red);
         }
 
     }

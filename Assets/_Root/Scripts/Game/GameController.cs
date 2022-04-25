@@ -102,6 +102,8 @@ namespace SnakeGame.Game
                     //TODO If avaliable node == 0, you win;
 
                     snakeController.Eating(fruitNode);
+
+
                     profilePlayer.MapModel.RemoveNode(fruitNode);
 
                     SetFruitPosition(fruit);

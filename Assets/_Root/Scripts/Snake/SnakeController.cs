@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
 using SnakeGame.Base;
-using SnakeGame.Tools.Reactive;
 using SnakeGame.UserControlSystem;
-using System;
 using SnakeGame.Abstractions;
-
-
 using JoostenProductions;
 using System.Collections.Generic;
 using SnakeGame.Map;
@@ -17,6 +13,7 @@ namespace SnakeGame.Snake
         public readonly SnakeModel snakeModel;
         private readonly SnakeView snakeView;
         private readonly List<TailNodeView> tail;
+        private GameObject tailParant;
        
 
         private float rateTime = 0.2f;
@@ -37,6 +34,8 @@ namespace SnakeGame.Snake
             snakeModel = new SnakeModel();
             snakeView = new SnakeView();
             tail = new List<TailNodeView>();
+            tailParant = new GameObject("Snake");
+
             snakeModel.OnChangePosition += snakeView.UpdateView;
             UpdateManager.SubscribeToUpdate(MovePlayer);
         }
@@ -46,7 +45,9 @@ namespace SnakeGame.Snake
             TailNodeView tailNode = new TailNodeView();
             tail.Add(tailNode);
             tailNode.Node = node;
-            tailNode.GO.transform.position = node.worldPosition;
+            tailNode.Obj.name = nameof(tailNode);
+            tailNode.Obj.transform.parent = tailParant.transform;
+            tailNode.Obj.transform.position = node.worldPosition;
         }
 
         public void MoveTail(Node prevNode)
@@ -61,7 +62,7 @@ namespace SnakeGame.Snake
 
                 tail[i].Node = prev;
                 prev = tempNode;
-                tail[i].GO.transform.position = tail[i].Node.worldPosition;
+                tail[i].Obj.transform.position = tail[i].Node.worldPosition;
             }
         }
 
