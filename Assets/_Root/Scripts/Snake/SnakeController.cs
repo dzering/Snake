@@ -47,7 +47,7 @@ namespace SnakeGame.Snake
             tailNode.Node = node;
             tailNode.Obj.name = nameof(tailNode);
             tailNode.Obj.transform.parent = tailParant.transform;
-            tailNode.Obj.transform.position = node.worldPosition;
+            tailNode.Obj.transform.position = node.WorldPosition;
         }
 
         public void MoveTail(Node prevNode)
@@ -62,7 +62,7 @@ namespace SnakeGame.Snake
 
                 tail[i].Node = prev;
                 prev = tempNode;
-                tail[i].Obj.transform.position = tail[i].Node.worldPosition;
+                tail[i].Obj.transform.position = tail[i].Node.WorldPosition;
             }
         }
 

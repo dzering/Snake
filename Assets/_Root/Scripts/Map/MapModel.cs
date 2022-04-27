@@ -7,54 +7,27 @@ namespace SnakeGame.Map
     public class MapModel
     {
         public Node[,] Grid { get; private set; }
-        private List<Node> avaliableNodes;
+        public List<Node> avaliableNodes;
 
         public MapModel(int x, int y)
         {
+            CreateGrid(x, y);
+        }
+
+        private void CreateGrid(int x, int y)
+        {
             Grid = new Node[x, y];
             avaliableNodes = new List<Node>();
-        }
 
-        public void FillGrid(int x, int y)
-        {
-            Vector3 targetPosition = Vector3.zero;
-            targetPosition.x = x;
-            targetPosition.y = y;
-
-            Node node = new Node()
+            for (int i = 0; i < x; i++)
             {
-                X = x,
-                Y = y,
-                worldPosition = targetPosition
-            };
-
-            Grid[x, y] = node;
-            avaliableNodes.Add(node);
+                for (int j = 0; j < y; j++)
+                {
+                    Grid[i, j] = new Node(i, j);
+                    avaliableNodes.Add(Grid[i, j]);
+                }
+            }
         }
 
-        public Node GetAvaliableNode()
-        {
-            int num = Random.Range(0, avaliableNodes.Count);
-            Node n = avaliableNodes[num];
-            return n;
-        }
-
-        public void RemoveNode(Node node)
-        {
-            avaliableNodes.Remove(node);
-        }
-
-        public void AddNodeToAvaliable(Node node)
-        {
-            avaliableNodes.Add(node);
-        }
-
-        public Node GetNode(int x, int y)
-        {
-            if (x < 0 || x > Grid.GetLength(0) - 1 || y < 0 || y > Grid.GetLength(1) - 1)
-                return null;
-
-            return Grid[x, y];
-        }
     }
 }

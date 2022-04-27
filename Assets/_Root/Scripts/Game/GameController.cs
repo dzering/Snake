@@ -54,34 +54,34 @@ namespace SnakeGame.Game
             fruit = spawner.CreateFruit(EnumFruits.Pear);
             SetFruitPosition(fruit);
 
-            cameraController.SetCamPos(profilePlayer.MapModel.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).worldPosition);
+            cameraController.SetCamPos(mapController.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).WorldPosition);
 
         }
 
 
         private void Init()
         {
-            playerNode = profilePlayer.MapModel.GetNode(2,2); //TODO make random start position
-            snakeController.snakeModel.SnakeWorldPosition = playerNode.worldPosition;
+            playerNode = mapController.GetNode(2,2); //TODO make random start position
+            snakeController.snakeModel.SnakeWorldPosition = playerNode.WorldPosition;
             snakeController.snakeModel.OnChangeMove += UpdatePlayerPosition;
         }
         private void SetFruitPosition(IFruit fruit)
         {
-            Node node = profilePlayer.MapModel.GetAvaliableNode();
-            fruit.SetPosition(node.worldPosition);
+            Node node = mapController.GetAvaliableNode();
+            fruit.SetPosition(node.WorldPosition);
             fruitNode = node;
-            profilePlayer.MapModel.RemoveNode(fruitNode);
+            mapController.RemoveNode(fruitNode);
         }
 
         private void UpdatePlayerPosition(int x, int y)
         {
             Node prevNode = playerNode;
-            nextNode = profilePlayer.MapModel.GetNode(playerNode.X + x, playerNode.Y + y);
+            nextNode = mapController.GetNode(playerNode.X + x, playerNode.Y + y);
             snakeController.MoveTail(prevNode);
 
             if(nextNode == null)
             {
-                Debug.Log("Game Over"); // GameOver
+                Debug.Log("Game Over"); //TODO GameOver
             }
             else
             {
@@ -92,7 +92,7 @@ namespace SnakeGame.Game
                     isScore = true;
                 }
 
-                snakeController.snakeModel.SnakeWorldPosition = nextNode.worldPosition;
+                snakeController.snakeModel.SnakeWorldPosition = nextNode.WorldPosition;
                 playerNode = nextNode;
 
                 //TODO Move Tail;
@@ -102,10 +102,7 @@ namespace SnakeGame.Game
                     //TODO If avaliable node == 0, you win;
 
                     snakeController.Eating(fruitNode);
-
-
-                    profilePlayer.MapModel.RemoveNode(fruitNode);
-
+                    mapController.RemoveNode(fruitNode);
                     SetFruitPosition(fruit);
 
                     //TODO You Have Scored;
