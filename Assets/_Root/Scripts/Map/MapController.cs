@@ -2,10 +2,11 @@ using Object = UnityEngine.Object;
 using UnityEngine;
 using SnakeGame.Tools.ResourceManager;
 using SnakeGame.Base;
+using SnakeGame.Abstractions;
 
 namespace SnakeGame.Map
 {
-    public class MapController : BaseController
+    public class MapController : BaseController, IMap
     {
         private readonly ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
 
@@ -43,7 +44,7 @@ namespace SnakeGame.Map
             return n;
         }
 
-        public Node GetNode(int x, int y)
+        public INode GetNode(int x, int y)
         {
             if (x < 0 || x > MaxWidth - 1 || y < 0 || y > MaxHight - 1)
                 return null;

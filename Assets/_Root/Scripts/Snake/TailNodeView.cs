@@ -1,12 +1,12 @@
 ﻿using SnakeGame.Base;
-using SnakeGame.Map;
+using SnakeGame.Abstractions;
 using UnityEngine;
 
 namespace SnakeGame.Snake
 {
     public class TailNodeView : BaseView
     {
-        public Node Node { get; set; }
+        public INode Node { get; set; }
         public TailNodeView()
         {
             Obj = CreateView(Color.gray);

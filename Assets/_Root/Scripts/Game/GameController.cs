@@ -22,7 +22,7 @@ namespace SnakeGame.Game
         private readonly Spawner spawner;
 
 
-        Node playerNode;
+        INode playerNode;
         Node nextNode;
         Node fruitNode;
 
@@ -35,11 +35,11 @@ namespace SnakeGame.Game
             snakeController = new SnakeController();
             AddController(snakeController);
 
-            interactionHandler = new KeyboardInteractionHandler(snakeController);
-            AddController(interactionHandler);
-
             mapController = new MapController(profilePlayer);
             AddController(mapController);
+
+            interactionHandler = new KeyboardInteractionHandler(snakeController, mapController);
+            AddController(interactionHandler);
 
             cameraController = new CameraController();
             AddController(cameraController);
@@ -57,13 +57,11 @@ namespace SnakeGame.Game
             cameraController.SetCamPos(mapController.GetNode(mapController.MaxWidth / 2, mapController.MaxHight / 2).WorldPosition);
 
         }
-
-
         private void Init()
         {
             playerNode = mapController.GetNode(2,2); //TODO make random start position
-            snakeController.snakeModel.SnakeWorldPosition = playerNode.WorldPosition;
-            snakeController.snakeModel.OnChangeMove += UpdatePlayerPosition;
+            snakeController.CurrentNode = playerNode;
+           // snakeController.SubsribeOnChange(UpdatePlayerPosition);
         }
         private void SetFruitPosition(IFruit fruit)
         {
@@ -72,49 +70,45 @@ namespace SnakeGame.Game
             fruitNode = node;
             mapController.RemoveNode(fruitNode);
         }
+        // private void UpdatePlayerPosition(int x, int y)
+        //{
+        //    Node prevNode = playerNode;
+        //    nextNode = mapController.GetNode(playerNode.X + x, playerNode.Y + y);
+        //    snakeController.MoveTail(prevNode);
 
-        private void UpdatePlayerPosition(int x, int y)
-        {
-            Node prevNode = playerNode;
-            nextNode = mapController.GetNode(playerNode.X + x, playerNode.Y + y);
-            snakeController.MoveTail(prevNode);
+        //    if(nextNode == null)
+        //    {
+        //        Debug.Log("Game Over"); //TODO GameOver
+        //    }
+        //    else
+        //    {
+        //        bool isScore = false;
 
-            if(nextNode == null)
-            {
-                Debug.Log("Game Over"); //TODO GameOver
-            }
-            else
-            {
-                bool isScore = false;
+        //        if (playerNode == fruitNode)
+        //        {
+        //            isScore = true;
+        //        }
 
-                if (playerNode == fruitNode)
-                {
-                    isScore = true;
-                }
+        //        snakeController.CurrentNode = nextNode;
+        //        playerNode = nextNode;
 
-                snakeController.snakeModel.SnakeWorldPosition = nextNode.WorldPosition;
-                playerNode = nextNode;
+        //        //TODO Move Tail;
 
-                //TODO Move Tail;
+        //        if (isScore)
+        //        {
+        //            //TODO If avaliable node == 0, you win;
 
-                if (isScore)
-                {
-                    //TODO If avaliable node == 0, you win;
+        //            snakeController.Eating(fruitNode);
+        //            mapController.RemoveNode(fruitNode);
+        //            SetFruitPosition(fruit);
 
-                    snakeController.Eating(fruitNode);
-                    mapController.RemoveNode(fruitNode);
-                    SetFruitPosition(fruit);
-
-                    //TODO You Have Scored;
-                }
-
-            }
-
-        }
-
-        protected override void OnDispose()
-        {
-            snakeController.snakeModel.OnChangeMove -= UpdatePlayerPosition;
-        }
+        //            //TODO You Have Scored;
+        //        }
+        //    }
+        //}
+        //protected override void OnDispose()
+        //{
+        //    snakeController.UnSubscribeOnChange(UpdatePlayerPosition);
+        //}
     }
 }

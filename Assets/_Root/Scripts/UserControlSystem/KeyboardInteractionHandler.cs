@@ -8,25 +8,78 @@ namespace SnakeGame.UserControlSystem
 {
     public class KeyboardInteractionHandler : BaseController
     {
-        private readonly IPlayerMoveDirection player;
+        private readonly IPlayer player;
+        private readonly IMap map;
         private bool up, down, left, right;
-       
-        public KeyboardInteractionHandler(IPlayerMoveDirection player)
+        private Direction playerDirection = Direction.Right;
+
+        private float rateTime = 0.2f;
+        private float timer;
+
+        public KeyboardInteractionHandler(IPlayer player, IMap map)
         {
             this.player = player;
-            UpdateManager.SubscribeToUpdate(SetPlayerDirection);
+            this.map = map;
+            UpdateManager.SubscribeToUpdate(Update);
         }
-        private void SetPlayerDirection()
+
+        public void Update()
         {
             GetInput();
+            GetDirection();
+
+            timer += Time.deltaTime;
+            if (timer > rateTime)
+            {
+                timer = 0;
+                switch (playerDirection)
+                {
+                    case Direction.Up:
+                        UpdatePlayerPosition(0, 1);
+                        break;
+
+                    case Direction.Down:
+                        UpdatePlayerPosition(0, -1);
+                        break;
+
+                    case Direction.Left:
+                        UpdatePlayerPosition(-1, 0);
+                        break;
+
+                    case Direction.Right:
+                        UpdatePlayerPosition(1, 0);
+                        break;
+                }
+            }
+
+        }
+
+        private void GetDirection()
+        {
             if (up)
-                player.CurrentDirection = (Direction.Up);
+            {
+                playerDirection = Direction.Up;
+                return;
+            }
+                
             if (down)
-                player.CurrentDirection = (Direction.Down);
+            {
+                playerDirection = Direction.Down;
+                return;
+            }
+                
             if (left)
-                player.CurrentDirection = (Direction.Left);
+            {
+                playerDirection = Direction.Left;
+                return;
+            }
+                
             if (right)
-                player.CurrentDirection = (Direction.Right);
+            {
+                playerDirection = Direction.Right;
+                return;
+            }
+                
 
         }
         private void GetInput()
@@ -37,11 +90,45 @@ namespace SnakeGame.UserControlSystem
             right = Input.GetButtonDown("Right");
         }
 
+        private void UpdatePlayerPosition(int x, int y)
+        {
+            INode nextNode = map.GetNode(player.CurrentNode.X + x, player.CurrentNode.Y + y);
+           // snakeController.MoveTail(prevNode);
 
+            if (nextNode == null)
+            {
+                Debug.Log("Game Over"); //TODO GameOver
+            }
+            else
+            {
+                //bool isScore = false;
+
+                //if (playerNode == fruitNode)
+                //{
+                //    isScore = true;
+                //}
+
+                player.CurrentNode = nextNode;
+                //playerNode = nextNode;
+
+                //TODO Move Tail;
+
+                //if (isScore)
+                //{
+                //    //TODO If avaliable node == 0, you win;
+
+                //    snakeController.Eating(fruitNode);
+                //    mapController.RemoveNode(fruitNode);
+                //    SetFruitPosition(fruit);
+
+                    //TODO You Have Scored;
+                //}
+            }
+        }
 
         protected override void OnDispose()
         {
-            UpdateManager.UnsubscribeFromUpdate(SetPlayerDirection);
+            UpdateManager.UnsubscribeFromUpdate(Update);
         }
 
     }
