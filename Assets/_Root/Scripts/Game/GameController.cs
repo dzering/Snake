@@ -21,7 +21,6 @@ namespace SnakeGame.Game
         private readonly CameraController cameraController;
         private readonly Spawner spawner;
 
-
         INode playerNode;
         Node nextNode;
         Node fruitNode;
@@ -61,7 +60,6 @@ namespace SnakeGame.Game
         {
             playerNode = mapController.GetNode(2,2); //TODO make random start position
             snakeController.CurrentNode = playerNode;
-           // snakeController.SubsribeOnChange(UpdatePlayerPosition);
         }
         private void SetFruitPosition(IFruit fruit)
         {

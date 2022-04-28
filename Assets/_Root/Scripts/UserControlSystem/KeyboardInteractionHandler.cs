@@ -6,7 +6,7 @@ using SnakeGame.Abstractions;
 
 namespace SnakeGame.UserControlSystem
 {
-    public class KeyboardInteractionHandler : BaseController
+    public class KeyboardInteractionHandler : BaseController, IInteractionHandler
     {
         private readonly IPlayer player;
         private readonly IMap map;
