@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SnakeGame.Abstractions;
 using UnityEngine;
 using SnakeGame.Map;
 using System;
@@ -10,11 +11,11 @@ namespace SnakeGame.Content.Fruits
     {
         public Action<Vector3> OnUpdate;
 
-        private Node node;
+        public INode Node;
 
-        public FruitModel(Node node)
+        public FruitModel(INode node)
         {
-            this.node = node;
+            Node = node;
         }
 
 

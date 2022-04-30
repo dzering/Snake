@@ -10,7 +10,7 @@ namespace SnakeGame.UserControlSystem
         private readonly IMap map;
         private readonly ProfilePlayer profilePlayer;
 
-        private Direction direction = Direction.Left;
+        private Direction direction = Direction.Right;
         private INode nextNode;
 
         private float time;
@@ -28,6 +28,7 @@ namespace SnakeGame.UserControlSystem
             
             if (time > profilePlayer.Speed )
             {
+                time = 0;
                 switch (direction)
                 {
                     case Direction.Left:
@@ -47,7 +48,10 @@ namespace SnakeGame.UserControlSystem
                         break;
                 }
 
-                player.Move(nextNode);
+                if (nextNode != null)
+                    player.Move(nextNode);
+                else
+                    Debug.Log("Game Over");
             }
 
             time += Time.deltaTime;

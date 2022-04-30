@@ -14,21 +14,24 @@ namespace SnakeGame.Content.Fruits
     {
         private readonly GameObject go;
         private readonly BaseView view;
+        private FruitModel fruitModel;
 
-        public FruitController()
+        public INode CurrentNode
+        {
+            get {return fruitModel.Node; }
+            set {fruitModel.Node = value; }
+        }
+
+        public FruitController() : base()
         {
             view = new FruitView();
             AddGameObject(view.Obj);
             go = view.Obj;
+          //  view.Obj.transform.position = node.WorldPosition;
         }
-
-        public FruitController(Vector3 worldPosition) : base()
+        public void SetPosition(INode node)
         {
-            view.Obj.transform.position = worldPosition;
-        }
-        public void SetPosition(Vector3 position)
-        {
-            go.transform.position = position;
+            go.transform.position = node.WorldPosition;
         }
     }
 }

@@ -5,6 +5,7 @@ using SnakeGame.Map;
 using SnakeGame.Base;
 using SnakeGame.UserControlSystem;
 using JoostenProductions;
+using SnakeGame.Content;
 
 namespace SnakeGame.Game
 {
@@ -15,6 +16,7 @@ namespace SnakeGame.Game
         private readonly IMap map;
         private readonly CameraController camera;
         private readonly  UserInputController inputController;
+        private readonly Spawner spawner;
 
         public GameController(ProfilePlayer profile)
         {
@@ -23,8 +25,14 @@ namespace SnakeGame.Game
             player = new SnakeController();
             map = new MapController(profile);
             inputController = new UserInputController(player, map, profile);
+            spawner = new Spawner();
+
+            player.CurrentNode = map.GetNode(3, 3);
+
+            spawner.CreateFruit(EnumFruits.Apple).SetPosition(map.GetNode(5, 5));
 
             camera.SetCamPos(map.GetNode(5, 5));
+
             UpdateManager.SubscribeToUpdate(inputController.Update);
         }
     }

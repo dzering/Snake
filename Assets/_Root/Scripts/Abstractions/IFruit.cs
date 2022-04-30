@@ -8,6 +8,7 @@ namespace SnakeGame.Abstractions
 {
     public interface IFruit
     {
-        void SetPosition(Vector3 position);
+        INode CurrentNode { get; set; }
+        void SetPosition(INode node);
     }
 }
