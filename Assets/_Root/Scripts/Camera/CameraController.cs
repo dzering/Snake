@@ -2,6 +2,7 @@ using UnityEngine;
 using SnakeGame.Base;
 using SnakeGame.Tools.ResourceManager;
 using SnakeGame.Camera;
+using SnakeGame.Abstractions;
 
 public class CameraController : BaseController
 {
@@ -11,7 +12,6 @@ public class CameraController : BaseController
     public CameraController()
     {
         cameraView = LoadView();
-
     }
 
     private CameraView LoadView()
@@ -20,10 +20,11 @@ public class CameraController : BaseController
         GameObject obj = UnityEngine.Object.Instantiate(pref);
 
         return obj.GetComponent<CameraView>();
+
     }
 
-    public void SetCamPos(Vector3 worldPosition)
+    public void SetCamPos(INode node)
     {
-        cameraView.transform.position = worldPosition;
+        cameraView.transform.position = node.WorldPosition;
     }
 }

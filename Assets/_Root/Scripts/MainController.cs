@@ -9,6 +9,7 @@ namespace SnakeGame
         private readonly ProfilePlayer profilePlayer;
         private readonly GameController gameController;
 
+
         public MainController(ProfilePlayer profilePlayer)
         {
             this.profilePlayer = profilePlayer;

@@ -2,5 +2,6 @@
 {
     public interface IInteractionHandler
     {
+        void Update();
     }
 }

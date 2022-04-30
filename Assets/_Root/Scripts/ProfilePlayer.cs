@@ -6,6 +6,7 @@ namespace SnakeGame
     {
         private SnakeModel snake;
         private GameState gameState;
+        public float Speed = 0.2f;
         public MapModel MapModel { get; }
 
         public ProfilePlayer()
