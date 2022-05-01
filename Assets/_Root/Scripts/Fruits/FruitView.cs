@@ -1,5 +1,6 @@
 using UnityEngine;
 using SnakeGame.Base;
+using SnakeGame.Abstractions;
 
 
 namespace SnakeGame.Content.Fruits
@@ -9,6 +10,11 @@ namespace SnakeGame.Content.Fruits
         public FruitView()
         {
             Obj = CreateView(Color.red);
+        }
+
+        public void UpdatePosition(Vector3 position)
+        {
+            Obj.transform.position = position;
         }
 
     }

@@ -8,7 +8,7 @@ namespace SnakeGame.Abstractions
 {
     public interface IFruit
     {
+       // void SetPosition(INode node);
         INode CurrentNode { get; set; }
-        void SetPosition(INode node);
     }
 }

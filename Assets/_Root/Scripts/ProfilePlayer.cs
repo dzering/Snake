@@ -11,7 +11,7 @@ namespace SnakeGame
 
         public ProfilePlayer()
         {
-            MapModel = new MapModel(8, 8);
+            MapModel = new MapModel(15, 15);
         }
     }
 

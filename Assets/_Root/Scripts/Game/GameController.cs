@@ -1,5 +1,5 @@
-﻿using SnakeGame.Abstractions;
-using SnakeGame;
+﻿using UnityEngine;
+using SnakeGame.Abstractions;
 using SnakeGame.Snake;
 using SnakeGame.Map;
 using SnakeGame.Base;
@@ -29,9 +29,11 @@ namespace SnakeGame.Game
 
             player.CurrentNode = map.GetNode(3, 3);
 
-            spawner.CreateFruit(EnumFruits.Apple).SetPosition(map.GetNode(5, 5));
+            spawner.CreateFruit(EnumFruits.Apple).CurrentNode = map.GetNode(5,5);
 
-            camera.SetCamPos(map.GetNode(5, 5));
+
+
+            camera.SetCamPos(map.GetCenterMap());
 
             UpdateManager.SubscribeToUpdate(inputController.Update);
         }

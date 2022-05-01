@@ -23,8 +23,8 @@ public class CameraController : BaseController
 
     }
 
-    public void SetCamPos(INode node)
+    public void SetCamPos(Vector3 position)
     {
-        cameraView.transform.position = node.WorldPosition;
+        cameraView.transform.position = position;
     }
 }

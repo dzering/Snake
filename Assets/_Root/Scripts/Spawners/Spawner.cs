@@ -13,11 +13,11 @@ public class Spawner : BaseController
         switch (enumFruits)
         {
             case EnumFruits.Apple:
-                IFruit apple = new FruitController();
+                IFruit apple = new FruitController(default);
 
                 return apple;
             case EnumFruits.Pear:
-                IFruit pear = new FruitController();
+                IFruit pear = new FruitController(default);
 
                 return pear;
         }

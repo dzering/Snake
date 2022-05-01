@@ -5,7 +5,7 @@ namespace SnakeGame.Base
     public abstract class BaseView
     {
         public GameObject Obj;
-        protected GameObject CreateView(Color color)
+        protected virtual GameObject CreateView(Color color)
         {
             Obj = new GameObject();
             SpriteRenderer snakeRenderer = Obj.AddComponent<SpriteRenderer>();

@@ -12,10 +12,11 @@ namespace SnakeGame.Map
 
         private readonly MapView mapView;
         private readonly MapModel mapModel;
+        private GameObject mapObject;
+
         public readonly int MaxWidth;
         public readonly int MaxHight;
 
-        private GameObject mapObject;
 
         public MapController(ProfilePlayer profilePlayer)
         {
@@ -101,10 +102,18 @@ namespace SnakeGame.Map
             txt.Apply();
 
             Rect rect = new Rect(0, 0, MaxWidth, MaxHight);
-            Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect); // ������� ����� � ��� ���������
+            Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect);
             mapRender.sprite = sprite;
         }
 
+        public Vector3 GetCenterMap()
+        {
+            Vector3 vec = mapObject.GetComponent<SpriteRenderer>().sprite.rect.center;
+            Vector3 sideOne = mapModel.Grid[0, 0].WorldPosition;
+            Vector3 sideTwo = mapModel.Grid[MaxWidth-1, MaxHight-1].WorldPosition;
+
+            return vec;//(sideTwo - sideOne)/2;
+        }
     }
 }
 

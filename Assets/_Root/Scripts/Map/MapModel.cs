@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using SnakeGame.Abstractions;
@@ -25,6 +25,7 @@ namespace SnakeGame.Map
                 for (int j = 0; j < y; j++)
                 {
                     Grid[i, j] = new Node(i, j);
+
                     avaliableNodes.Add(Grid[i, j]);
                 }
             }

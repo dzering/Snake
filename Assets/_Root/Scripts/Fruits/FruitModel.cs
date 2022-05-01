@@ -10,14 +10,16 @@ namespace SnakeGame.Content.Fruits
     public class FruitModel
     {
         public Action<Vector3> OnUpdate;
+        private INode node;
 
-        public INode Node;
-
-        public FruitModel(INode node)
+        public INode Node
         {
-            Node = node;
+            get {return node; }
+            set {
+                node = value;
+                if(node!= null)
+                    OnUpdate?.Invoke(node.WorldPosition);
+            }
         }
-
-
     }
 }
