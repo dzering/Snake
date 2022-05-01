@@ -6,6 +6,7 @@ using SnakeGame.Base;
 using SnakeGame.UserControlSystem;
 using JoostenProductions;
 using SnakeGame.Content;
+using System.Collections.Generic;
 
 namespace SnakeGame.Game
 {
@@ -18,6 +19,8 @@ namespace SnakeGame.Game
         private readonly  UserInputController inputController;
         private readonly Spawner spawner;
 
+        private readonly List<IFruit> fruits;
+
         public GameController(ProfilePlayer profile)
         {
             this.profilePlayer = profile;
@@ -29,13 +32,40 @@ namespace SnakeGame.Game
 
             player.CurrentNode = map.GetNode(3, 3);
 
-            spawner.CreateFruit(EnumFruits.Apple).CurrentNode = map.GetNode(5,5);
+            fruits = new List<IFruit>();
 
-
+            IFruit apple = spawner.CreateFruit(EnumFruits.Apple);
+            apple.CurrentNode = map.GetAvaliableNode();
+            fruits.Add(apple);
+            
 
             camera.SetCamPos(map.GetCenterMap());
 
-            UpdateManager.SubscribeToUpdate(inputController.Update);
+            UpdateManager.SubscribeToUpdate(Update);
+        }
+
+        private void Update()
+        {
+            inputController.Update();
+            EatController();
+        }
+
+        private void EatController()
+        {
+            bool isScore = false;
+            foreach (var fruit in fruits)
+            {
+                if(player.CurrentNode == fruit.CurrentNode)
+                {
+                    isScore = true;
+                    fruit.CurrentNode = map.GetAvaliableNode();
+                }
+            }
+
+            if (isScore)
+            {
+                Debug.Log("Score");
+            }
         }
     }
 }

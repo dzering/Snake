@@ -6,5 +6,7 @@ namespace SnakeGame.Abstractions
     {
         Vector3 GetCenterMap();
         INode GetNode(int x, int y);
+
+        INode GetAvaliableNode();
     }
 }

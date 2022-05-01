@@ -10,9 +10,9 @@ namespace SnakeGame.Map
     {
         private readonly ResourcePath path = new ResourcePath() { Path = "Prefabs/Map" };
 
-        private readonly MapView mapView;
-        private readonly MapModel mapModel;
-        private GameObject mapObject;
+        private readonly MapView viewMap;
+        private readonly MapModel modelMap;
+        private GameObject ObjMap;
 
         public readonly int MaxWidth;
         public readonly int MaxHight;
@@ -20,28 +20,29 @@ namespace SnakeGame.Map
 
         public MapController(ProfilePlayer profilePlayer)
         {
-            mapModel = profilePlayer.MapModel;
-            MaxWidth = mapModel.Grid.GetLength(0);
-            MaxHight = mapModel.Grid.GetLength(1);
+            modelMap = profilePlayer.MapModel;
+            MaxWidth = modelMap.Grid.GetLength(0);
+            MaxHight = modelMap.Grid.GetLength(1);
 
-            mapView = LoadView();
-            AddGameObject(mapObject);
+            viewMap = LoadView();
+            AddGameObject(ObjMap);
             CreateMap();
         }
-        public void RemoveNode(Node node)
+        public void RemoveNodeFromAvaliable(Node node)
         {
-            mapModel.avaliableNodes.Remove(node);
+            modelMap.avaliableNodes.Remove(node);
         }
 
         public void AddNodeToAvaliable(Node node)
         {
-            mapModel.avaliableNodes.Add(node);
+            modelMap.avaliableNodes.Add(node);
         }
 
-        public Node GetAvaliableNode()
+        public INode GetAvaliableNode()
         {
-            int num = Random.Range(0, mapModel.avaliableNodes.Count);
-            Node n = mapModel.avaliableNodes[num];
+            int num = Random.Range(0, modelMap.avaliableNodes.Count);
+            Node n = modelMap.avaliableNodes[num];
+            RemoveNodeFromAvaliable(n);
             return n;
         }
 
@@ -50,19 +51,27 @@ namespace SnakeGame.Map
             if (x < 0 || x > MaxWidth - 1 || y < 0 || y > MaxHight - 1)
                 return null;
 
-            return mapModel.Grid[x,y];
+            return modelMap.Grid[x,y];
         }
 
+        public Vector3 GetCenterMap()
+        {
+            Vector3 vec = ObjMap.GetComponent<SpriteRenderer>().sprite.rect.center;
+            Vector3 sideOne = modelMap.Grid[0, 0].WorldPosition;
+            Vector3 sideTwo = modelMap.Grid[MaxWidth-1, MaxHight-1].WorldPosition;
+
+            return vec;//(sideTwo - sideOne)/2;
+        }
         private MapView LoadView()
         {
             var pref = ResourceLoader.LoadPrefab(path);
-            mapObject = GameObject.Instantiate(pref);
-            return mapObject.GetComponent<MapView>();
+            ObjMap = GameObject.Instantiate(pref);
+            return ObjMap.GetComponent<MapView>();
         }
 
         private void CreateMap()
         {
-            SpriteRenderer mapRender = mapObject.AddComponent<SpriteRenderer>();
+            SpriteRenderer mapRender = ObjMap.AddComponent<SpriteRenderer>();
 
             Texture2D txt = new Texture2D(MaxWidth, MaxHight);
             for (int x = 0; x < MaxWidth; x++)
@@ -75,22 +84,22 @@ namespace SnakeGame.Map
                     {
                         if (y % 2 != 0)
                         {
-                            txt.SetPixel(x, y, mapView.Color1);
+                            txt.SetPixel(x, y, viewMap.Color1);
                         }
                         else
                         {
-                            txt.SetPixel(x, y, mapView.Color2);
+                            txt.SetPixel(x, y, viewMap.Color2);
                         }
                     }
                     else
                     {
                         if (y % 2 != 0)
                         {
-                            txt.SetPixel(x, y, mapView.Color2);
+                            txt.SetPixel(x, y, viewMap.Color2);
                         }
                         else
                         {
-                            txt.SetPixel(x, y, mapView.Color1);
+                            txt.SetPixel(x, y, viewMap.Color1);
                         }
 
                     }
@@ -104,15 +113,6 @@ namespace SnakeGame.Map
             Rect rect = new Rect(0, 0, MaxWidth, MaxHight);
             Sprite sprite = Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect);
             mapRender.sprite = sprite;
-        }
-
-        public Vector3 GetCenterMap()
-        {
-            Vector3 vec = mapObject.GetComponent<SpriteRenderer>().sprite.rect.center;
-            Vector3 sideOne = mapModel.Grid[0, 0].WorldPosition;
-            Vector3 sideTwo = mapModel.Grid[MaxWidth-1, MaxHight-1].WorldPosition;
-
-            return vec;//(sideTwo - sideOne)/2;
         }
     }
 }

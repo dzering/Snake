@@ -46,7 +46,7 @@ namespace SnakeGame.Snake
         {
             CurrentNode = nextNode;
         }
-        public void Eating(INode node)
+        public void Eat(INode node)
         {
             TailNodeView tailNode = new TailNodeView();
             tail.Add(tailNode);
