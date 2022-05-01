@@ -16,8 +16,8 @@ namespace SnakeGame.Game
         private readonly IPlayer player;
         private readonly IMap map;
         private readonly CameraController camera;
-        private readonly  UserInputController inputController;
-        private readonly Spawner spawner;
+        private readonly UserInputController inputController;
+        private readonly FruitSpawner fruitSpawner;
 
         private readonly List<IFruit> fruits;
 
@@ -28,13 +28,13 @@ namespace SnakeGame.Game
             player = new SnakeController();
             map = new MapController(profile);
             inputController = new UserInputController(player, map, profile);
-            spawner = new Spawner();
+            fruitSpawner = new FruitSpawner();
 
             player.CurrentNode = map.GetNode(3, 3);
 
             fruits = new List<IFruit>();
 
-            IFruit apple = spawner.CreateFruit(EnumFruits.Apple);
+            IFruit apple = fruitSpawner.CreateFruit(EnumFruits.Apple);
             apple.CurrentNode = map.GetAvaliableNode();
             fruits.Add(apple);
             
@@ -47,18 +47,26 @@ namespace SnakeGame.Game
         private void Update()
         {
             inputController.Update();
-            EatController();
+            Score();
         }
 
-        private void EatController()
+        private void Score()
         {
             bool isScore = false;
             foreach (var fruit in fruits)
             {
                 if(player.CurrentNode == fruit.CurrentNode)
                 {
+                    player.Eat(fruit.CurrentNode);
                     isScore = true;
-                    fruit.CurrentNode = map.GetAvaliableNode();
+
+                    INode nextNode = map.GetAvaliableNode();
+
+                    map.AddNodeToAvaliable(fruit.CurrentNode);
+
+                    map.RemoveNodeFromAvaliable(nextNode);
+                    fruit.CurrentNode = nextNode;
+                    
                 }
             }
 
@@ -66,6 +74,10 @@ namespace SnakeGame.Game
             {
                 Debug.Log("Score");
             }
+        }
+        protected override void OnDispose()
+        {
+            UpdateManager.SubscribeToUpdate(Update);
         }
     }
 }

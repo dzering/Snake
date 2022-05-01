@@ -4,7 +4,7 @@ namespace SnakeGame.Base
 {
     public abstract class BaseView
     {
-        public GameObject Obj;
+        public GameObject Obj { get; set; }
         protected virtual GameObject CreateView(Color color)
         {
             Obj = new GameObject();

@@ -5,7 +5,7 @@ using SnakeGame.Abstractions;
 using SnakeGame.Base;
 using SnakeGame.Content.Fruits;
 
-public class Spawner : BaseController
+public class FruitSpawner : BaseController
 {
     
     public IFruit CreateFruit(EnumFruits enumFruits)

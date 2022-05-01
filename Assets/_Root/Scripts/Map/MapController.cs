@@ -28,12 +28,12 @@ namespace SnakeGame.Map
             AddGameObject(ObjMap);
             CreateMap();
         }
-        public void RemoveNodeFromAvaliable(Node node)
+        public void RemoveNodeFromAvaliable(INode node)
         {
             modelMap.avaliableNodes.Remove(node);
         }
 
-        public void AddNodeToAvaliable(Node node)
+        public void AddNodeToAvaliable(INode node)
         {
             modelMap.avaliableNodes.Add(node);
         }
@@ -41,7 +41,7 @@ namespace SnakeGame.Map
         public INode GetAvaliableNode()
         {
             int num = Random.Range(0, modelMap.avaliableNodes.Count);
-            Node n = modelMap.avaliableNodes[num];
+            INode n = modelMap.avaliableNodes[num];
             RemoveNodeFromAvaliable(n);
             return n;
         }

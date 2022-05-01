@@ -8,7 +8,7 @@ namespace SnakeGame.Map
     public class MapModel
     {
         public Node[,] Grid { get; private set; }
-        public List<Node> avaliableNodes;
+        public List<INode> avaliableNodes;
 
         public MapModel(int x, int y)
         {
@@ -18,7 +18,7 @@ namespace SnakeGame.Map
         private void CreateGrid(int x, int y)
         {
             Grid = new Node[x, y];
-            avaliableNodes = new List<Node>();
+            avaliableNodes = new List<INode>();
 
             for (int i = 0; i < x; i++)
             {

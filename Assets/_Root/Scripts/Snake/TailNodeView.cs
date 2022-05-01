@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SnakeGame.Snake
 {
-    public class TailNodeView : BaseView
+    public class TailNodeView : BaseView, INodeTail
     {
         public INode Node { get; set; }
         public TailNodeView()

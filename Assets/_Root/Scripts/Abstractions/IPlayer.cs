@@ -8,6 +8,7 @@ namespace SnakeGame.Abstractions
     {
         INode CurrentNode { get; set; }
         void Move(INode nextNode);
+        void Eat(INode node);
 
     }
 }
