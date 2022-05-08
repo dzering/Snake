@@ -22,7 +22,7 @@ namespace SnakeGame.Base
             txt.Apply();
             txt.filterMode = FilterMode.Point;
             Rect rect = new Rect(0, 0, 1, 1);
-            return Sprite.Create(txt, rect, Vector2.zero, 1, 0, SpriteMeshType.FullRect);
+            return Sprite.Create(txt, rect, Vector2.one * 0.5f, 1, 0, SpriteMeshType.FullRect);
         }
     }
 }

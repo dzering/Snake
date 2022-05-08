@@ -1,6 +1,7 @@
 ﻿using SnakeGame.Base;
 using SnakeGame.Abstractions;
 using UnityEngine;
+using SnakeGame.Utility;
 
 namespace SnakeGame.Snake
 {
@@ -10,6 +11,7 @@ namespace SnakeGame.Snake
         public TailNodeView()
         {
             Obj = CreateView(Color.gray);
+            Obj.transform.localScale = Vector3.one * 0.9f;
         }
 
     }

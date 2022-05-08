@@ -4,8 +4,7 @@ using SnakeGame.UserControlSystem;
 using SnakeGame.Abstractions;
 using JoostenProductions;
 using System.Collections.Generic;
-using SnakeGame.Map;
-using System;
+using SnakeGame.Utility;
 
 namespace SnakeGame.Snake
 {
@@ -22,6 +21,7 @@ namespace SnakeGame.Snake
             snakeView = new SnakeView();
             tail = new List<TailNodeView>();
             tailParant = new GameObject("Snake");
+            snakeView.Obj.transform.parent = tailParant.transform;
 
             snakeModel.OnChangePosition += snakeView.UpdateView;
         }
@@ -44,6 +44,7 @@ namespace SnakeGame.Snake
         }
         public void Move(INode nextNode)
         {
+            MoveTail(CurrentNode);
             CurrentNode = nextNode;
         }
         public void Eat(INode node)
@@ -53,10 +54,11 @@ namespace SnakeGame.Snake
             tailNode.Node = node;
             tailNode.Obj.name = nameof(tailNode);
             tailNode.Obj.transform.parent = tailParant.transform;
-            tailNode.Obj.transform.position = node.WorldPosition;
+            Utilities.PlaceObjectCorrect(tailNode.Obj, node.WorldPosition);
+            //tailNode.Obj.transform.position = node.WorldPosition;
         }
 
-        public void MoveTail(INode prevNode)
+        private void MoveTail(INode prevNode)
         {
             if (tail.Count == 0)
                 return;
@@ -69,6 +71,7 @@ namespace SnakeGame.Snake
                 tail[i].Node = prev;
                 prev = tempNode;
                 tail[i].Obj.transform.position = tail[i].Node.WorldPosition;
+                Utilities.PlaceObjectCorrect(tail[i].Obj, tail[i].Node.WorldPosition);
             }
         }
 

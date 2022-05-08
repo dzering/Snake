@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using SnakeGame.Base;
+using SnakeGame.Utility;
 
 namespace SnakeGame.Snake
 {
@@ -14,7 +15,9 @@ namespace SnakeGame.Snake
 
         public void UpdateView(Vector3 worldPosition)
         {
-            Obj.transform.position = worldPosition;
+            Utilities.PlaceObjectCorrect(Obj, worldPosition);
+           // Obj.transform.position = worldPosition;
+
         }
     }
 }

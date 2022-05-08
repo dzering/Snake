@@ -51,36 +51,41 @@ namespace SnakeGame.UserControlSystem
                         break;
                 }
             }
-
         }
 
         private void GetDirection()
         {
             if (up)
             {
-                playerDirection = Direction.Up;
+                if(playerDirection == Direction.Down)
+                    return;
+                else
+                    playerDirection = Direction.Up;
+                    
                 return;
             }
                 
-            if (down)
+            else if (down)
             {
-                playerDirection = Direction.Down;
+                if (playerDirection == Direction.Up)
+                    return;
+                else
+                    playerDirection = Direction.Down;
+
                 return;
             }
                 
-            if (left)
+            else if (left)
             {
                 playerDirection = Direction.Left;
                 return;
             }
                 
-            if (right)
+            else if (right)
             {
                 playerDirection = Direction.Right;
                 return;
             }
-                
-
         }
         private void GetInput()
         {
@@ -93,7 +98,6 @@ namespace SnakeGame.UserControlSystem
         private void UpdatePlayerPosition(int x, int y)
         {
             INode nextNode = map.GetNode(player.CurrentNode.X + x, player.CurrentNode.Y + y);
-           // snakeController.MoveTail(prevNode);
 
             if (nextNode == null)
             {
@@ -101,28 +105,7 @@ namespace SnakeGame.UserControlSystem
             }
             else
             {
-                //bool isScore = false;
-
-                //if (playerNode == fruitNode)
-                //{
-                //    isScore = true;
-                //}
-
                 player.CurrentNode = nextNode;
-                //playerNode = nextNode;
-
-                //TODO Move Tail;
-
-                //if (isScore)
-                //{
-                //    //TODO If avaliable node == 0, you win;
-
-                //    snakeController.Eating(fruitNode);
-                //    mapController.RemoveNode(fruitNode);
-                //    SetFruitPosition(fruit);
-
-                    //TODO You Have Scored;
-                //}
             }
         }
 
