@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 using SnakeGame.Abstractions;
 
@@ -14,6 +14,8 @@ namespace SnakeGame.UserControlSystem
         private INode nextNode;
 
         private float time;
+
+        private INode prevNode;
 
         public UserInputController(IPlayer player, IMap map, ProfilePlayer profilePlayer)
         {
@@ -49,29 +51,57 @@ namespace SnakeGame.UserControlSystem
                 }
 
                 if (nextNode != null)
+                {
+                    prevNode = player.CurrentNode;
                     player.Move(nextNode);
+                }
                 else
+                {
                     Debug.Log("Game Over");
+                }
             }
 
             time += Time.deltaTime;
 
         }
+
         private void SetDirection()
         {
             if (Input.GetButtonDown("Left"))
             {
-                direction = Direction.Left;
+                nextNode = map.GetNode(player.CurrentNode.X - 1, player.CurrentNode.Y); //TODO optimization possibility
+                if (nextNode == prevNode)
+                    direction = Direction.Right;
+                else
+                    direction = Direction.Left;
             }
 
             else if (Input.GetButtonDown("Right"))
-                direction = Direction.Right;
+            {
+                nextNode = map.GetNode(player.CurrentNode.X + 1, player.CurrentNode.Y);
+                if (nextNode == prevNode)
+                    direction = Direction.Left;
+                else
+                    direction = Direction.Right;
+            }
 
             else if (Input.GetButtonDown("Up"))
-                direction = Direction.Up;
+            {
+                nextNode = map.GetNode(player.CurrentNode.X, player.CurrentNode.Y + 1);
+                if (nextNode == prevNode)
+                    direction = Direction.Down;
+                else
+                    direction = Direction.Up;
+            }
 
             else if (Input.GetButtonDown("Down"))
-                direction = Direction.Down;
+            {
+                nextNode = map.GetNode(player.CurrentNode.X, player.CurrentNode.Y - 1);
+                if (nextNode == prevNode)
+                    direction = Direction.Up;
+                else
+                    direction = Direction.Down;
+            }
         }
     }
 }

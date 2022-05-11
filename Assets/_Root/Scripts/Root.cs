@@ -2,6 +2,7 @@ using UnityEngine;
 using SnakeGame.Game;
 
 
+
 namespace SnakeGame
 {
     public class Root : MonoBehaviour
@@ -13,6 +14,7 @@ namespace SnakeGame
         {
             profilePlayer = new ProfilePlayer();
             mainController = new MainController(profilePlayer);
+
         }
 
         private void OnDestroy()

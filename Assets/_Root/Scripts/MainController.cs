@@ -1,4 +1,4 @@
-﻿using SnakeGame.Base;
+using SnakeGame.Base;
 using SnakeGame.Game;
 
 

@@ -1,4 +1,4 @@
-﻿namespace SnakeGame.UserControlSystem
+namespace SnakeGame.UserControlSystem
 {
     public enum Direction
     {

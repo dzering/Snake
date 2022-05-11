@@ -42,12 +42,23 @@ namespace SnakeGame.Game
             camera.SetCamPos(map.GetCenterMap());
 
             UpdateManager.SubscribeToUpdate(Update);
+            player.OnMove += EatTail;
         }
 
         private void Update()
         {
             inputController.Update();
             Score();
+
+        }
+
+        private void EatTail()
+        {
+            foreach (var item in player.Tail)
+            {
+                if (item.Node == player.CurrentNode)
+                    Debug.Log("Game Over! Ate his tail.");
+            }
         }
 
         private void Score()
@@ -77,7 +88,8 @@ namespace SnakeGame.Game
         }
         protected override void OnDispose()
         {
-            UpdateManager.SubscribeToUpdate(Update);
+            UpdateManager.UnsubscribeFromUpdate(Update);
+            player.OnMove -= EatTail;
         }
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7928812934113511676}
-  - component: {fileID: 1634116036275841767}
+  - component: {fileID: 956444005975692496}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -27,11 +27,12 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1634116036275841767
+--- !u!114 &956444005975692496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3557699067009331872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e716a5c73ce881540a32df3407240c39, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b7b023ba86fbff44b0cabf560a6aaca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxWidth: 10
-  MaxHight: 10
-  Color1: {r: 0.23921569, g: 0.27450982, b: 0.027450982, a: 1}
-  Color2: {r: 0.10741558, g: 0.2735849, b: 0.02710039, a: 1}
+  MaxWidth: 15
+  MaxHight: 15
+  Color1: {r: 0.9339623, g: 0.8158953, b: 0.8158953, a: 1}
+  Color2: {r: 0.8962264, g: 0.8421146, b: 0.8421146, a: 1}

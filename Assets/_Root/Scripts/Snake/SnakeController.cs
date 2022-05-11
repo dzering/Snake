@@ -5,16 +5,23 @@ using SnakeGame.Abstractions;
 using JoostenProductions;
 using System.Collections.Generic;
 using SnakeGame.Utility;
+using System;
+using UnityEngine.Events;
 
 namespace SnakeGame.Snake
 {
+    
     class SnakeController : BaseController, IPlayer
     {
+        public event Action OnMove = null; 
+
         private readonly SnakeModel snakeModel;
         private readonly SnakeView snakeView;
         private readonly List<TailNodeView> tail;
         private GameObject tailParant;
         private Direction currentDirection = Direction.Right;
+
+        public List<TailNodeView> Tail => tail;
         public SnakeController()
         {
             snakeModel = new SnakeModel();
@@ -25,6 +32,7 @@ namespace SnakeGame.Snake
 
             snakeModel.OnChangePosition += snakeView.UpdateView;
         }
+
         public Direction CurrentDirection {
             get { return currentDirection; }
             set 
@@ -46,7 +54,9 @@ namespace SnakeGame.Snake
         {
             MoveTail(CurrentNode);
             CurrentNode = nextNode;
+            OnMove?.Invoke();
         }
+
         public void Eat(INode node)
         {
             TailNodeView tailNode = new TailNodeView();
@@ -74,7 +84,6 @@ namespace SnakeGame.Snake
                 Utilities.PlaceObjectCorrect(tail[i].Obj, tail[i].Node.WorldPosition);
             }
         }
-
         protected override void OnDispose()
         {
             snakeModel.OnChangePosition -= snakeView.UpdateView;
