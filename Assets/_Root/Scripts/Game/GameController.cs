@@ -42,31 +42,33 @@ namespace SnakeGame.Game
             camera.SetCamPos(map.GetCenterMap());
 
             UpdateManager.SubscribeToUpdate(Update);
-            player.OnMove += EatTail;
+            player.OnMove += CheckTailIntersection;
+            player.OnMove += Score;
+            
         }
 
         private void Update()
         {
             inputController.Update();
-            Score();
 
         }
 
-        private void EatTail()
+        private void CheckTailIntersection(INode node)
         {
             foreach (var item in player.Tail)
             {
-                if (item.Node == player.CurrentNode)
-                    Debug.Log("Game Over! Ate his tail.");
+                if (item.Node == node)
+                    Debug.Log("Game over! Ate his tail.");
             }
+
         }
 
-        private void Score()
+        private void Score(INode node)
         {
             bool isScore = false;
             foreach (var fruit in fruits)
             {
-                if(player.CurrentNode == fruit.CurrentNode)
+                if(node == fruit.CurrentNode)
                 {
                     player.Eat(fruit.CurrentNode);
                     isScore = true;
@@ -89,7 +91,8 @@ namespace SnakeGame.Game
         protected override void OnDispose()
         {
             UpdateManager.UnsubscribeFromUpdate(Update);
-            player.OnMove -= EatTail;
+            player.OnMove -= CheckTailIntersection;
+            player.OnMove -= Score;
         }
     }
 }

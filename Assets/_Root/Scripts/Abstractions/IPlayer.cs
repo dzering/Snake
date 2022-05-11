@@ -9,10 +9,10 @@ namespace SnakeGame.Abstractions
 {
     public interface IPlayer
     {
+        event Action<INode> OnMove;
         INode CurrentNode { get; set; }
         List<TailNodeView> Tail { get; }
 
-        event Action OnMove;
         void Move(INode nextNode);
         void Eat(INode node);
         

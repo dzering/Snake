@@ -13,7 +13,11 @@ namespace SnakeGame.Snake
     
     class SnakeController : BaseController, IPlayer
     {
-        public event Action OnMove = null; 
+        public event Action<INode> OnMove
+        {
+            add { snakeModel.OnChangePosition += value; }
+            remove {snakeModel.OnChangePosition -= value; }
+        }
 
         private readonly SnakeModel snakeModel;
         private readonly SnakeView snakeView;
@@ -54,7 +58,6 @@ namespace SnakeGame.Snake
         {
             MoveTail(CurrentNode);
             CurrentNode = nextNode;
-            OnMove?.Invoke();
         }
 
         public void Eat(INode node)

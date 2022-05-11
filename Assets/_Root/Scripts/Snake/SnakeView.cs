@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using SnakeGame.Base;
 using SnakeGame.Utility;
+using SnakeGame.Abstractions;
 
 namespace SnakeGame.Snake
 {
@@ -13,11 +14,9 @@ namespace SnakeGame.Snake
             Obj.GetComponent<SpriteRenderer>().sortingOrder = 2;
         }
 
-        public void UpdateView(Vector3 worldPosition)
+        public void UpdateView(INode node)
         {
-            Utilities.PlaceObjectCorrect(Obj, worldPosition);
-           // Obj.transform.position = worldPosition;
-
+            Utilities.PlaceObjectCorrect(Obj, node.WorldPosition);
         }
     }
 }

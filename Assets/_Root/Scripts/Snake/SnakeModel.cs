@@ -6,7 +6,7 @@ namespace SnakeGame
 {
     public class SnakeModel
     {
-        public Action<Vector3> OnChangePosition;
+        public Action<INode> OnChangePosition;
         private INode currentNode;
         public INode CurrentNode
         {
@@ -14,7 +14,7 @@ namespace SnakeGame
             set
             {
                 currentNode = value;
-                OnChangePosition(currentNode.WorldPosition);                
+                OnChangePosition?.Invoke(currentNode);                
             }
         }
     }
