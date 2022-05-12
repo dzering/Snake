@@ -1,10 +1,12 @@
 using UnityEngine;
+using SnakeGame.Base;
+using SnakeGame.Profile;
 
 using SnakeGame.Abstractions;
 
 namespace SnakeGame.UserControlSystem
 {
-    public class UserInputController : IInteractionHandler
+    public class UserInputController : BaseController, IInteractionHandler
     {
         private readonly IPlayer player;
         private readonly IMap map;
@@ -22,6 +24,8 @@ namespace SnakeGame.UserControlSystem
             this.player = player;
             this.map = map;
             this.profilePlayer = profilePlayer;
+            prevNode = player.CurrentNode;
+            map.RemoveNodeFromAvaliable(player.CurrentNode);
         }
 
         public void Update()
@@ -53,7 +57,12 @@ namespace SnakeGame.UserControlSystem
                 if (nextNode != null)
                 {
                     prevNode = player.CurrentNode;
+
                     player.Move(nextNode);
+                    if(player.Tail.Count == 0)
+                        map.AddNodeToAvaliable(prevNode);
+
+                    map.RemoveNodeFromAvaliable(player.CurrentNode);
                 }
                 else
                 {

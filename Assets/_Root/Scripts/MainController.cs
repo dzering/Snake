@@ -1,5 +1,6 @@
 using SnakeGame.Base;
 using SnakeGame.Game;
+using SnakeGame.Profile;
 
 
 namespace SnakeGame
@@ -7,14 +8,29 @@ namespace SnakeGame
     public class MainController : BaseController
     {
         private readonly ProfilePlayer profilePlayer;
-        private readonly GameController gameController;
+        private GameController gameController;
 
 
         public MainController(ProfilePlayer profilePlayer)
         {
             this.profilePlayer = profilePlayer;
-            gameController = new GameController(profilePlayer);
-            AddController(gameController);
+
+        }
+
+        private void OnChangeGameState(GameState gameState)
+        {
+            switch (gameState)
+            {
+                case GameState.None:
+                    break;
+                case GameState.Menu:
+                    break;
+                case GameState.Game:
+                    gameController = new GameController(profilePlayer);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

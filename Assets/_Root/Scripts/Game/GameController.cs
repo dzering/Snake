@@ -5,7 +5,7 @@ using SnakeGame.Map;
 using SnakeGame.Base;
 using SnakeGame.UserControlSystem;
 using JoostenProductions;
-using SnakeGame.Content;
+using SnakeGame.Profile;
 using System.Collections.Generic;
 
 namespace SnakeGame.Game
@@ -13,8 +13,8 @@ namespace SnakeGame.Game
     public class GameController : BaseController
     {
         private readonly ProfilePlayer profilePlayer;
-        private readonly IPlayer player;
-        private readonly IMap map;
+        private readonly SnakeController player;
+        private readonly MapController map;
         private readonly CameraController camera;
         private readonly UserInputController inputController;
         private readonly FruitSpawner fruitSpawner;
@@ -24,62 +24,72 @@ namespace SnakeGame.Game
         public GameController(ProfilePlayer profile)
         {
             this.profilePlayer = profile;
-            camera = new CameraController();
-            player = new SnakeController();
-            map = new MapController(profile);
-            inputController = new UserInputController(player, map, profile);
-            fruitSpawner = new FruitSpawner();
 
-            player.CurrentNode = map.GetNode(3, 3);
+            camera = new CameraController();
+            AddController(camera);
+
+            player = new SnakeController();
+            AddController(player);
+
+            map = new MapController(profile);
+            AddController(map);
+
+            inputController = new UserInputController(player, map, profile);
+            AddController(inputController);
+
+            fruitSpawner = new FruitSpawner();
+            AddController(fruitSpawner);
 
             fruits = new List<IFruit>();
 
+            Init();
+        }
+
+
+        private void Init()
+        {
+            player.CurrentNode = map.GetNode(3, 3);
             IFruit apple = fruitSpawner.CreateFruit(EnumFruits.Apple);
             apple.CurrentNode = map.GetAvaliableNode();
             fruits.Add(apple);
-            
+            map.RemoveNodeFromAvaliable(apple.CurrentNode);
 
             camera.SetCamPos(map.GetCenterMap());
 
             UpdateManager.SubscribeToUpdate(Update);
             player.OnMove += CheckTailIntersection;
             player.OnMove += Score;
-            
+            player.OnTailLastNode += map.AddNodeToAvaliable;
         }
 
         private void Update()
         {
             inputController.Update();
-
         }
 
-        private void CheckTailIntersection(INode node)
+        private void CheckTailIntersection(INode playerNode)
         {
             foreach (var item in player.Tail)
             {
-                if (item.Node == node)
+                if (item.Node == playerNode)
                     Debug.Log("Game over! Ate his tail.");
             }
-
         }
 
-        private void Score(INode node)
+        private void Score(INode playerNode)
         {
             bool isScore = false;
             foreach (var fruit in fruits)
             {
-                if(node == fruit.CurrentNode)
+                if(playerNode == fruit.CurrentNode)
                 {
                     player.Eat(fruit.CurrentNode);
+                    
                     isScore = true;
 
                     INode nextNode = map.GetAvaliableNode();
-
-                    map.AddNodeToAvaliable(fruit.CurrentNode);
-
                     map.RemoveNodeFromAvaliable(nextNode);
                     fruit.CurrentNode = nextNode;
-                    
                 }
             }
 
@@ -93,6 +103,8 @@ namespace SnakeGame.Game
             UpdateManager.UnsubscribeFromUpdate(Update);
             player.OnMove -= CheckTailIntersection;
             player.OnMove -= Score;
+            player.OnTailLastNode -= map.RemoveNodeFromAvaliable;
+            fruits.Clear();
         }
     }
 }

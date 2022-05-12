@@ -3,6 +3,10 @@ using UnityEngine;
 using SnakeGame.Tools.ResourceManager;
 using SnakeGame.Base;
 using SnakeGame.Abstractions;
+using SnakeGame.Profile;
+
+using SnakeGame.Content.Fruits;
+using System.Collections.Generic;
 
 namespace SnakeGame.Map
 {
@@ -17,6 +21,8 @@ namespace SnakeGame.Map
         public readonly int MaxWidth;
         public readonly int MaxHight;
 
+        private List<FruitController> listAvaliableMarkers; // Delete
+
 
         public MapController(ProfilePlayer profilePlayer)
         {
@@ -27,22 +33,66 @@ namespace SnakeGame.Map
             viewMap = LoadView();
             AddGameObject(ObjMap);
             CreateMap();
+
+
+            TestAvaliable(); // TestAvaliable Delete
         }
+
+        #region TestAvaliable
+        private void TestAvaliable()
+        {
+            listAvaliableMarkers = new List<FruitController>();
+            foreach (var item in modelMap.avaliableNodes)
+            {
+                FruitController marker = new FruitController(item);
+                Vector3 newPosition = item.WorldPosition;
+                newPosition.x -= 10f;
+                Utility.Utilities.PlaceObjectCorrect(marker.go, newPosition);
+                listAvaliableMarkers.Add(marker);
+            }
+        }
+
+        private void RemoveMarkers(INode node)
+        {
+                for (int i = 0; i < listAvaliableMarkers.Count; i++)
+                {
+                    if(listAvaliableMarkers[i].CurrentNode == node)
+                    {
+                        listAvaliableMarkers[i].go.SetActive(false);
+                    }
+                }
+        }
+
+        private void AddMarkers(INode node)
+        {
+            for (int i = 0; i < listAvaliableMarkers.Count; i++)
+            {
+                if (listAvaliableMarkers[i].CurrentNode == node)
+                {
+                    listAvaliableMarkers[i].go.SetActive(true);
+                }
+            }
+
+        }
+
+        #endregion
+
         public void RemoveNodeFromAvaliable(INode node)
         {
-            modelMap.avaliableNodes.Remove(node);
+            modelMap.avaliableNodes?.Remove(node);
+            RemoveMarkers(node); // Delete
         }
 
         public void AddNodeToAvaliable(INode node)
         {
-            modelMap.avaliableNodes.Add(node);
+            modelMap.avaliableNodes?.Add(node);
+            AddMarkers(node); // Delete
         }
 
         public INode GetAvaliableNode()
         {
             int num = Random.Range(0, modelMap.avaliableNodes.Count);
             INode n = modelMap.avaliableNodes[num];
-            RemoveNodeFromAvaliable(n);
             return n;
         }
 

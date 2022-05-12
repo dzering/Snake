@@ -1,5 +1,6 @@
 using UnityEngine;
 using SnakeGame.Game;
+using SnakeGame.Profile;
 
 
 
@@ -14,7 +15,6 @@ namespace SnakeGame
         {
             profilePlayer = new ProfilePlayer();
             mainController = new MainController(profilePlayer);
-
         }
 
         private void OnDestroy()

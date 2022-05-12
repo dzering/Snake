@@ -5,11 +5,11 @@ namespace SnakeGame.Tools.Reactive
     public class SubscriptionProperty<T> : IReadOnlySubscriptionProperty<T>
     {
         private T value;
-        public Action<T> OnChangeValue;
+        private Action<T> OnChangeValue;
 
         public T Value
         {
-            get { return value; }
+            get => value;
             set
             {
                 this.value = value;

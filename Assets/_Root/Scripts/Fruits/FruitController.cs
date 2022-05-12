@@ -6,7 +6,7 @@ namespace SnakeGame.Content.Fruits
 {
     public class FruitController : BaseController, IFruit
     {
-        private readonly GameObject go;
+        public readonly GameObject go; //todo change to private
         private readonly FruitView view;
         private readonly FruitModel fruitModel;
 
@@ -32,9 +32,5 @@ namespace SnakeGame.Content.Fruits
             fruitModel.OnUpdate += view.UpdatePosition;
             fruitModel.Node = node;
         }
-        //public void SetPosition(INode node)
-        //{
-        //    fruitModel.Node = node;
-        //}
     }
 }

@@ -2,17 +2,16 @@
 using SnakeGame.Base;
 using SnakeGame.UserControlSystem;
 using SnakeGame.Abstractions;
-using JoostenProductions;
 using System.Collections.Generic;
 using SnakeGame.Utility;
 using System;
-using UnityEngine.Events;
 
 namespace SnakeGame.Snake
 {
     
     class SnakeController : BaseController, IPlayer
     {
+        public Action<INode> OnTailLastNode;
         public event Action<INode> OnMove
         {
             add { snakeModel.OnChangePosition += value; }
@@ -32,6 +31,8 @@ namespace SnakeGame.Snake
             snakeView = new SnakeView();
             tail = new List<TailNodeView>();
             tailParant = new GameObject("Snake");
+            AddGameObject(tailParant);
+
             snakeView.Obj.transform.parent = tailParant.transform;
 
             snakeModel.OnChangePosition += snakeView.UpdateView;
@@ -58,6 +59,7 @@ namespace SnakeGame.Snake
         {
             MoveTail(CurrentNode);
             CurrentNode = nextNode;
+            
         }
 
         public void Eat(INode node)
@@ -68,24 +70,25 @@ namespace SnakeGame.Snake
             tailNode.Obj.name = nameof(tailNode);
             tailNode.Obj.transform.parent = tailParant.transform;
             Utilities.PlaceObjectCorrect(tailNode.Obj, node.WorldPosition);
-            //tailNode.Obj.transform.position = node.WorldPosition;
         }
 
-        private void MoveTail(INode prevNode)
+        private void MoveTail(INode nextNode)
         {
             if (tail.Count == 0)
                 return;
 
-            INode prev = prevNode;
+            INode tempNode = null;
             for (int i = 0; i < tail.Count; i++)
             {
-                INode tempNode = tail[i].Node;
+                tempNode = tail[i].Node;
 
-                tail[i].Node = prev;
-                prev = tempNode;
+                tail[i].Node = nextNode;
+                nextNode = tempNode;
                 tail[i].Obj.transform.position = tail[i].Node.WorldPosition;
                 Utilities.PlaceObjectCorrect(tail[i].Obj, tail[i].Node.WorldPosition);
             }
+            
+            OnTailLastNode?.Invoke(nextNode);
         }
         protected override void OnDispose()
         {
