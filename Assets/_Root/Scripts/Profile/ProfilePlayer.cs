@@ -14,6 +14,7 @@ namespace SnakeGame.Profile
         public ProfilePlayer()
         {
             MapModel = new MapModel(8, 8);
+            CurrentState = new SubscriptionProperty<GameState>();
         }
     }
 

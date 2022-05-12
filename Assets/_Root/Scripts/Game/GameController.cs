@@ -15,7 +15,7 @@ namespace SnakeGame.Game
         private readonly ProfilePlayer profilePlayer;
         private readonly SnakeController player;
         private readonly MapController map;
-        private readonly CameraController camera;
+       // private readonly CameraController camera;
         private readonly UserInputController inputController;
         private readonly FruitSpawner fruitSpawner;
 
@@ -25,8 +25,8 @@ namespace SnakeGame.Game
         {
             this.profilePlayer = profile;
 
-            camera = new CameraController();
-            AddController(camera);
+            //camera = new CameraController();
+            //AddController(camera);
 
             player = new SnakeController();
             AddController(player);
@@ -54,7 +54,7 @@ namespace SnakeGame.Game
             fruits.Add(apple);
             map.RemoveNodeFromAvaliable(apple.CurrentNode);
 
-            camera.SetCamPos(map.GetCenterMap());
+         //   camera.SetCamPos(map.GetCenterMap());
 
             UpdateManager.SubscribeToUpdate(Update);
             player.OnMove += CheckTailIntersection;
