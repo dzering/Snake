@@ -54,7 +54,7 @@ namespace SnakeGame.Game
             fruits.Add(apple);
             map.RemoveNodeFromAvaliable(apple.CurrentNode);
 
-         //   camera.SetCamPos(map.GetCenterMap());
+         //TODO   camera.SetCamPos(map.GetCenterMap());
 
             UpdateManager.SubscribeToUpdate(Update);
             player.OnMove += CheckTailIntersection;
