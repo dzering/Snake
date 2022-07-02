@@ -18,13 +18,32 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        RotationToMousePosiniton();
+
         if (Input.anyKey)
         {
             directionZ = Input.GetAxis("Vertical");
             directionX = Input.GetAxis("Horizontal");
             Move(directionZ, directionX);
+
         }
-        
+
     }
 
+    private void RotationToMousePosiniton()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 5.23f;
+
+        Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        mousePos.x = mousePos.x - objectPos.x;
+        mousePos.z = mousePos.z - objectPos.z;
+
+        float angle = Mathf.Atan2(mousePos.x, mousePos.z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(angle, 0, 0));
+
+
+
+    }
 }
